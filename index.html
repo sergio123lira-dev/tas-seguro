@@ -14,6 +14,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+section[id]{scroll-margin-top:72px}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3{font-family:var(--display);margin:0;line-height:1.08;letter-spacing:-.025em;text-wrap:balance}
 p{margin:0}
@@ -653,6 +654,24 @@ const $ = id => document.getElementById(id);
   addEventListener('scroll', () => { if (!m.hidden) fechar(); }, {passive:true});
 })();
 
+
+
+/* ================= LINKS INTERNOS SEM # NO ENDEREÇO ================= */
+(function(){
+  const limpa = () => history.replaceState(null, '', location.pathname + location.search);
+  const vai = (id, suave) => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: suave ? 'smooth' : 'auto', block: 'start' }); };
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey) return;
+    const id = a.getAttribute('href').slice(1);
+    if (id === 'crm') return; // área da corretora continua usando o endereço
+    e.preventDefault();
+    if (id === 'topo' || !id) scrollTo({ top: 0, behavior: 'smooth' }); else vai(id, true);
+    if (location.hash && location.hash !== '#crm') limpa();
+  });
+  // quem chega por um link com # (ex.: tasseguro.com.br/#cotar) vai para a parte certa e o endereço fica limpo
+  if (location.hash && location.hash !== '#crm') { const id = location.hash.slice(1); addEventListener('load', () => { vai(id, false); limpa(); }); }
+})();
 
 /* ================= ABERTURA ================= */
 (function(){
