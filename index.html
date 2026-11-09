@@ -1,4 +1,4 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Tás Seguro: corretora de seguro de moto e carro. Peça sua cotação."><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/icones/favicon.svg"><link rel="apple-touch-icon" href="/icones/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#05081a"><meta property="og:type" content="website"><meta property="og:site_name" content="Tás Seguro"><meta property="og:title" content="Tás Seguro · Cotação rápida, sem papelada"><meta property="og:description" content="Corretora de seguros em Recife. Seguro de moto, carro e muito mais. Peça sua cotação."><meta property="og:url" content="https://tasseguro.com.br/"><meta property="og:image" content="https://tasseguro.com.br/icones/compartilhar.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"></head><body><title>Tás Seguro</title>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Tás Seguro: corretora de seguros em Recife. Carro, moto, vida, residencial, empresarial, viagem, saúde e muito mais. Peça sua cotação."><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/icones/favicon.svg"><link rel="apple-touch-icon" href="/icones/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#05081a"><meta property="og:type" content="website"><meta property="og:site_name" content="Tás Seguro"><meta property="og:title" content="Tás Seguro · Cotação rápida, sem papelada"><meta property="og:description" content="Corretora de seguros em Recife. Seguro de moto, carro e muito mais. Peça sua cotação."><meta property="og:url" content="https://tasseguro.com.br/"><meta property="og:image" content="https://tasseguro.com.br/icones/compartilhar.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"></head><body><title>Tás Seguro</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
@@ -149,9 +149,9 @@ header{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);z-index:30
 .f{display:grid;gap:6px;min-width:0;align-content:start}
 .f.full{grid-column:1/-1}
 .f label{font-size:12px;font-weight:700;color:var(--soft);letter-spacing:.08em;text-transform:uppercase}
-.f input,.f select{width:100%;font:500 16px var(--body);color:#fff;background:rgba(5,8,26,.6);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:13px 14px}
-.f input::placeholder{color:#66729c}
-.f input:focus,.f select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(63,180,255,.2)}
+.f input,.f select,.f textarea{width:100%;font:500 16px var(--body);color:#fff;background:rgba(5,8,26,.6);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:13px 14px}
+.f input::placeholder,.f textarea::placeholder{color:#66729c}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(63,180,255,.2)}
 #placa{text-transform:uppercase;letter-spacing:.1em;font-weight:700}
 .quote .btn{width:100%;margin-top:20px;padding:18px}
 .fine{font-size:13px;color:var(--dim);margin-top:12px;text-align:center}
@@ -340,6 +340,29 @@ body.crm-mode header .links{display:none}
 .saved-note{font-size:13px;color:var(--ok);margin-top:8px;min-height:1.2em}
 .done.bad{background:rgba(255,120,140,.1);border-color:rgba(255,120,140,.4)}
 
+.seguros{padding-block:110px 100px;border-top:1px solid var(--panel-line);background:linear-gradient(var(--bg-2),var(--bg) 45%)}
+.seguros h2{font:800 clamp(30px,4.6vw,52px)/1.05 var(--display);letter-spacing:-.01em;margin:0}
+.sg-intro{color:var(--soft);font-size:18px;line-height:1.55;max-width:640px;margin:16px 0 0}
+.sg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:40px}
+.sg{position:relative;display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:22px;background:rgba(255,255,255,.035);border:1px solid var(--panel-line);transition:border-color .2s,background .2s,transform .2s}
+.sg:hover{border-color:rgba(63,180,255,.5);background:rgba(63,180,255,.06);transform:translateY(-2px)}
+.sg-top{background:linear-gradient(150deg,rgba(63,180,255,.14),rgba(79,124,243,.06));border-color:rgba(63,180,255,.35)}
+.sg-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:rgba(63,180,255,.12);color:var(--glow)}
+.sg-ic svg{width:26px;height:26px}
+.sg h3{margin:6px 0 0;font:700 19px/1.2 var(--display);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sg h3 em{font:700 10.5px/1 var(--body);font-style:normal;letter-spacing:.1em;text-transform:uppercase;padding:5px 8px;border-radius:999px;background:rgba(63,180,255,.18);color:var(--glow)}
+.sg p{margin:0;color:var(--soft);font-size:15px;line-height:1.5;flex:1}
+.sg-go{margin-top:6px;font-weight:700;font-size:15px;color:#fff;text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.sg-go::after{content:"";position:absolute;inset:0;border-radius:22px}
+.sg-go:focus-visible{outline:none}.sg:has(.sg-go:focus-visible){outline:3px solid var(--cyan);outline-offset:2px}
+.sg-go span{transition:transform .2s}.sg:hover .sg-go span{transform:translateX(4px)}
+.sg-more{margin-top:28px;color:var(--soft)}.sg-more a{color:var(--glow);font-weight:700}
+@media (max-width:560px){.seguros{padding-block:80px 70px}.sg-grid{grid-template-columns:1fr 1fr;gap:10px}.sg{padding:18px;border-radius:18px}.sg p{font-size:13.5px}.sg h3{font-size:16.5px}.sg-ic{width:40px;height:40px}}
+@media (max-width:380px){.sg-grid{grid-template-columns:1fr}}
+.seg{grid-template-columns:1fr 1fr 1fr}
+.f textarea{font:inherit;resize:vertical;min-height:84px}
+[data-veh][hidden],[data-outros][hidden]{display:none!important}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 
@@ -355,7 +378,7 @@ body.crm-mode header .links{display:none}
       <span>TÁS <b>SEGURO</b></span>
     </a>
     <nav class="links" aria-label="Principal">
-      <a href="#c-roubo">Coberturas</a><a href="#c-carro">Carro</a><a href="#como">Como funciona</a><a href="#duvidas">Dúvidas</a>
+      <a href="#seguros">Seguros</a><a href="#intro">Auto e moto</a><a href="#como">Como funciona</a><a href="#duvidas">Dúvidas</a>
     </nav>
     <div class="nav-r"><a class="btn btn-main" href="#cotar">Cotar agora</a><button type="button" class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mmenu"><span></span><span></span><span></span></button></div>
   </div>
@@ -522,16 +545,93 @@ body.crm-mode header .links{display:none}
     <div class="wrap">
       <svg class="chk" viewBox="0 0 40 40" aria-hidden="true"><path d="M5 15 L15 24 L34 5" pathLength="1" fill="none" stroke="#3fb4ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 34 H36" pathLength="1" fill="none" stroke="#4f7cf3" stroke-width="6" stroke-linecap="round"/></svg>
       <h1>Bateu? <span class="grad">Tás seguro.</span></h1>
-      <p>Corretora de seguro para moto e carro. A gente compara várias seguradoras, e quando você precisa, atende na hora.</p>
+      <p>Corretora de seguros: carro, moto, vida, casa, empresa e muito mais. A gente compara várias seguradoras, e quando você precisa, atende na hora.</p>
       <div class="cta"><a class="btn btn-main" href="#cotar">Fazer minha cotação</a><button class="btn btn-glass" id="replay" type="button">↻ Ver de novo</button></div>
     </div>
+  </div>
+</section>
+
+<section class="solid seguros" id="seguros">
+  <div class="wrap">
+    <span class="kick"><i></i>Nossos seguros</span>
+    <h2 style="margin-top:14px">Do carro à casa, <span class="grad">tás seguro.</span></h2>
+    <p class="sg-intro">Somos uma corretora: cotamos em várias seguradoras e te ajudamos a escolher a melhor proteção para cada parte da sua vida e do seu negócio.</p>
+    <div class="sg-grid">
+      <article class="sg sg-top">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16h14M6 16l1.6-5.2A2 2 0 0 1 9.5 9.4h5a2 2 0 0 1 1.9 1.4L18 16"/><path d="M4 16v2.5h2.5V17h11v1.5H20V16"/><circle cx="8" cy="14" r=".6"/><circle cx="16" cy="14" r=".6"/></svg></span>
+        <h3>Auto<em>Especialidade</em></h3>
+        <p>Carro da família ou de aplicativo, com carro reserva e assistência 24h.</p>
+        <a class="sg-go" href="#cotar" data-produto="Carro">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="sg sg-top">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="16.5" r="3"/><circle cx="18.5" cy="16.5" r="3"/><path d="M5.5 16.5 9.5 11h5l4 5.5M13 7h3l2.5 9.5M9.5 11 8 8H6"/></svg></span>
+        <h3>Moto<em>Especialidade</em></h3>
+        <p>Roubo, colisão e guincho. Também para quem trabalha com entregas.</p>
+        <a class="sg-go" href="#cotar" data-produto="Moto">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="sg">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.5A4 4 0 0 1 12 8a4 4 0 0 1 7 2.5C19 15.6 12 20 12 20Z"/></svg></span>
+        <h3>Vida</h3>
+        <p>Proteção financeira para a sua família se o pior acontecer.</p>
+        <a class="sg-go" href="#cotar" data-produto="Vida">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="sg">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></svg></span>
+        <h3>Residencial</h3>
+        <p>Casa ou apartamento protegidos contra incêndio, roubo e danos elétricos.</p>
+        <a class="sg-go" href="#cotar" data-produto="Residencial">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="sg">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="1.5"/><path d="M9 8V5.5h6V8M4 13h16"/></svg></span>
+        <h3>Empresarial</h3>
+        <p>Loja, escritório ou comércio protegidos contra imprevistos que param o negócio.</p>
+        <a class="sg-go" href="#cotar" data-produto="Empresarial">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="sg">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 8V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V8M8 8v12M16 8v12"/></svg></span>
+        <h3>Viagem</h3>
+        <p>Despesas médicas, bagagem e imprevistos no Brasil e no exterior.</p>
+        <a class="sg-go" href="#cotar" data-produto="Viagem">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="sg">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg></span>
+        <h3>Celular e eletrônicos</h3>
+        <p>Roubo, furto e quebra do celular, notebook ou tablet.</p>
+        <a class="sg-go" href="#cotar" data-produto="Celular e eletrônicos">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="sg">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15h11V7H3zM14 10h4l3 3v2h-7"/><circle cx="7" cy="17" r="1.7"/><circle cx="17" cy="17" r="1.7"/></svg></span>
+        <h3>Frotas</h3>
+        <p>Uma apólice só para todos os veículos da sua empresa.</p>
+        <a class="sg-go" href="#cotar" data-produto="Frotas">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="sg">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/><rect x="3" y="3" width="18" height="18" rx="4"/></svg></span>
+        <h3>Saúde e odontológico</h3>
+        <p>Planos para você, sua família ou a sua equipe.</p>
+        <a class="sg-go" href="#cotar" data-produto="Saúde e odontológico">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="sg">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="3.5"/><path d="M11.5 12H21M18 12v3M15.5 12v2"/></svg></span>
+        <h3>Fiança de aluguel</h3>
+        <p>Alugue sem fiador e sem depósito caução.</p>
+        <a class="sg-go" href="#cotar" data-produto="Fiança de aluguel">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="sg">
+        <span class="sg-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16V7h12v9M14 10h4.5l3 3.5V16"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/><path d="M8 16h8"/></svg></span>
+        <h3>Caminhão e carga</h3>
+        <p>Proteção para o caminhão e para a mercadoria na estrada.</p>
+        <a class="sg-go" href="#cotar" data-produto="Caminhão e carga">Quero cotar <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+    <p class="sg-more">Não achou o que procura? <a href="#cotar" data-produto="Outro">Fala com a gente</a> que a gente cota.</p>
   </div>
 </section>
 
 <main id="story">
   <section class="chap" id="intro" data-k="moto,-0.6,0.55,5.6,1.15">
     <div class="wrap"><div class="panel">
-      <span class="kick"><i></i>Seguro auto e moto</span>
+      <span class="kick"><i></i>Nossa especialidade: auto e moto</span>
       <h2>Cada cobertura, <span class="grad">de perto.</span></h2>
       <p>Role a página e veja o que protege a sua moto e o seu carro.</p>
     </div></div>
@@ -587,7 +687,7 @@ body.crm-mode header .links{display:none}
       <span class="kick"><i></i>Como funciona</span>
       <h2 style="margin-top:14px">Da cotação à apólice, sem sair do WhatsApp</h2>
       <div class="steps">
-        <div class="st"><h3>Você pede a cotação</h3><p>Manda modelo, ano e placa pelo formulário ou direto no WhatsApp.</p></div>
+        <div class="st"><h3>Você pede a cotação</h3><p>Conta pra gente o que quer proteger, pelo formulário ou direto no WhatsApp.</p></div>
         <div class="st"><h3>A gente compara</h3><p>Cotamos em várias seguradoras e mostramos as melhores opções lado a lado.</p></div>
         <div class="st"><h3>Tás seguro</h3><p>Escolheu, fechou. A apólice chega no seu e-mail e a gente acompanha tudo daí em diante.</p></div>
       </div>
@@ -601,25 +701,29 @@ body.crm-mode header .links{display:none}
         <input type="hidden" name="enviado_em" value="">
         <p hidden><label>Não preencha: <input name="bot-field"></label></p>
         <h2>Peça sua cotação</h2>
-        <p class="sub">Preencha seus dados e um corretor da Tás te chama com as melhores opções.</p>
-        <div class="seg" role="radiogroup" aria-label="Tipo de veículo">
+        <p class="sub">Escolha o tipo de seguro, preencha seus dados e um corretor da Tás te chama com as melhores opções.</p>
+        <div class="seg" role="radiogroup" aria-label="Tipo de seguro">
           <input type="radio" name="tipo" id="t-moto" value="Moto" checked>
           <label for="t-moto">Moto</label>
           <input type="radio" name="tipo" id="t-carro" value="Carro">
           <label for="t-carro">Carro</label>
+          <input type="radio" name="tipo" id="t-outros" value="Outros">
+          <label for="t-outros">Outros</label>
         </div>
         <div id="q-step1">
         <div class="fields">
           <div class="f full"><label for="nome">Seu nome</label><input id="nome" name="nome" autocomplete="name" placeholder="Ex.: Maria Souza"></div>
           <div class="f"><label for="tel">WhatsApp / telefone</label><input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="(81) 9 9999-9999"></div>
           <div class="f"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="voce@email.com"></div>
-          <div class="f"><label for="modelo">Modelo</label><input id="modelo" name="modelo" list="modelos" autocomplete="off" placeholder="Ex.: CG 160 Fan"><datalist id="modelos"></datalist></div>
-          <div class="f"><label for="ano">Ano</label><select id="ano" name="ano"></select></div>
-          <div class="f"><label for="placa">Placa do veículo</label><input id="placa" name="placa" placeholder="ABC1D23" maxlength="7" autocomplete="off" autocapitalize="characters"></div>
-          <div class="f"><label for="uso">Uso</label><select id="uso" name="uso"><option>Particular</option><option>Trabalho / app</option><option>Entregas</option></select></div>
-          <div class="f"><label for="fipe">Valor FIPE</label><input id="fipe" name="fipe" inputmode="numeric" placeholder="Ex.: R$ 18.000"><small class="fipe-hint" id="fipe-hint"></small></div>
+          <div class="f full" data-outros hidden><label for="produto">Qual seguro?</label><select id="produto" name="produto"><option value="">Escolha o seguro</option><option>Vida</option><option>Residencial</option><option>Empresarial</option><option>Viagem</option><option>Celular e eletrônicos</option><option>Frotas</option><option>Saúde e odontológico</option><option>Fiança de aluguel</option><option>Caminhão e carga</option><option>Outro</option></select></div>
+          <div class="f full" data-outros hidden><label for="detalhes">Conte um pouco do que você quer proteger</label><textarea id="detalhes" name="detalhes" rows="3" placeholder="Ex.: apartamento de 2 quartos em Boa Viagem; viagem para Portugal em março, 2 pessoas…"></textarea></div>
+          <div class="f" data-veh><label for="modelo">Modelo</label><input id="modelo" name="modelo" list="modelos" autocomplete="off" placeholder="Ex.: CG 160 Fan"><datalist id="modelos"></datalist></div>
+          <div class="f" data-veh><label for="ano">Ano</label><select id="ano" name="ano"></select></div>
+          <div class="f" data-veh><label for="placa">Placa do veículo</label><input id="placa" name="placa" placeholder="ABC1D23" maxlength="7" autocomplete="off" autocapitalize="characters"></div>
+          <div class="f" data-veh><label for="uso">Uso</label><select id="uso" name="uso"><option>Particular</option><option>Trabalho / app</option><option>Entregas</option></select></div>
+          <div class="f" data-veh><label for="fipe">Valor FIPE</label><input id="fipe" name="fipe" inputmode="numeric" placeholder="Ex.: R$ 18.000"><small class="fipe-hint" id="fipe-hint"></small></div>
           <div class="f"><label for="cep">CEP</label><input id="cep" name="cep" inputmode="numeric" placeholder="00000-000" maxlength="9"></div>
-          <div class="f"><label for="idade">Idade do condutor</label><input id="idade" name="idade" inputmode="numeric" placeholder="Ex.: 32" maxlength="2"></div>
+          <div class="f" data-veh><label for="idade">Idade do condutor</label><input id="idade" name="idade" inputmode="numeric" placeholder="Ex.: 32" maxlength="2"></div>
         </div>
         <button class="btn btn-main" type="submit" id="send">Enviar cotação</button>
         </div>
@@ -656,8 +760,9 @@ body.crm-mode header .links{display:none}
       <p class="intro">Não achou sua resposta? Fala com a gente pelo (81) 90000-0000.</p>
     </div>
     <div class="qa">
-      <details open><summary>O que é uma corretora de seguros?</summary><p>É quem faz a ponte entre você e as seguradoras. A gente cota em várias, compara e te ajuda a escolher, sem custo extra pra você. Depois, acompanha a apólice, a renovação e o sinistro.</p></details>
-      <details><summary>Quanto custa o seguro?</summary><p>Depende do modelo, ano, região de uso, perfil do condutor e coberturas escolhidas. Por isso a cotação é personalizada e gratuita.</p></details>
+      <details open><summary>Vocês fazem só seguro de carro e moto?</summary><p>Não. Auto e moto são a nossa especialidade, mas a Tás cota seguro de vida, residencial, empresarial, viagem, celular e eletrônicos, frotas, saúde e odontológico, fiança de aluguel e caminhão e carga.</p></details>
+      <details><summary>O que é uma corretora de seguros?</summary><p>É quem faz a ponte entre você e as seguradoras. A gente cota em várias, compara e te ajuda a escolher, sem custo extra pra você. Depois, acompanha a apólice, a renovação e o sinistro.</p></details>
+      <details><summary>Quanto custa o seguro?</summary><p>Depende do que você quer proteger e das coberturas escolhidas. No seguro de veículo, por exemplo, contam o modelo, o ano, a região e o perfil do condutor. Por isso a cotação é personalizada e gratuita.</p></details>
       <details><summary>Posso parcelar?</summary><p>Sim. A maioria das seguradoras parcela no cartão ou no boleto, e muitas oferecem parcelas sem juros.</p></details>
       <details><summary>O que fazer se eu bater ou for roubado?</summary><p>Liga pra gente primeiro. Orientamos no registro do B.O., na abertura do sinistro e acompanhamos até a indenização ou o conserto.</p></details>
       <details><summary>Já tenho seguro. Vale cotar na renovação?</summary><p>Vale. Comparando seguradoras é comum achar a mesma cobertura por menos, mantendo o bônus que você já tem.</p></details>
@@ -881,9 +986,21 @@ ano.value = Y - 3;
 const placa = $('placa');
 placa.addEventListener('input', () => { placa.value = placa.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 7); });
 let formVeh = 'moto';
+function aplicaTipo(){
+  const outros = formVeh === 'outros';
+  document.querySelectorAll('#form [data-veh]').forEach(el => { el.hidden = outros; });
+  document.querySelectorAll('#form [data-outros]').forEach(el => { el.hidden = !outros; });
+  if (!outros) $('modelo').placeholder = formVeh === 'carro' ? 'Ex.: Onix 1.0' : 'Ex.: CG 160 Fan';
+}
+document.querySelectorAll('[data-produto]').forEach(a => a.addEventListener('click', () => {
+  const p = a.dataset.produto;
+  const alvo = p === 'Carro' ? 't-carro' : p === 'Moto' ? 't-moto' : 't-outros';
+  const r = $(alvo); r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true }));
+  if (alvo === 't-outros') $('produto').value = p;
+}));
 document.querySelectorAll('input[name="tipo"]').forEach(r => r.addEventListener('change', () => {
-  formVeh = r.value === 'Carro' ? 'carro' : 'moto';
-  $('modelo').placeholder = formVeh === 'carro' ? 'Ex.: Onix 1.0' : 'Ex.: CG 160 Fan';
+  formVeh = r.value === 'Carro' ? 'carro' : r.value === 'Outros' ? 'outros' : 'moto';
+  aplicaTipo();
   if (window.__tasFlash) window.__tasFlash();
 }));
 /* ================= COTAÇÕES (banco de dados) ================= */
@@ -1033,7 +1150,10 @@ $('form').addEventListener('submit', async e => {
   e.preventDefault();
   const err = $('err'), done = $('done'), btn = $('send');
   const d = { tipo: formVeh, nome: $('nome').value.trim(), tel: normTel($('tel').value), email: $('email').value.trim(), modelo: $('modelo').value.trim(), ano: ano.value, placa: placa.value, uso: $('uso').value, cep: cepIn.value.replace(/\D/g,''), idade: $('idade').value.trim(), fipe: fipeIn.value.replace(/\D/g,'') };
-  if (!d.nome || d.tel.length < 10 || !d.modelo) { err.textContent = 'Preencha seu nome, telefone com DDD e o modelo do veículo.'; err.hidden = false; return; }
+  const outros = formVeh === 'outros';
+  if (outros) { d.tipo = $('produto').value; d.detalhes = $('detalhes').value.trim(); ['modelo','ano','placa','uso','fipe','idade'].forEach(k => { d[k] = ''; }); }
+  if (outros && (!d.nome || d.tel.length < 10 || !d.tipo)) { err.textContent = 'Preencha seu nome, telefone com DDD e escolha o seguro.'; err.hidden = false; return; }
+  if (!outros && (!d.nome || d.tel.length < 10 || !d.modelo)) { err.textContent = 'Preencha seu nome, telefone com DDD e o modelo do veículo.'; err.hidden = false; return; }
   err.hidden = true; btn.disabled = true; btn.textContent = 'Enviando…';
   const lead = { ...d, id: Date.now().toString(36) + Math.random().toString(36).slice(2,7), ts: new Date().toISOString(), origem: 'Site' };
   let salvo = false;
@@ -1041,7 +1161,7 @@ $('form').addEventListener('submit', async e => {
   if (!naClaude) {
     try {
       const fd = new FormData($('form'));
-      fd.set('tel', fmtTel(d.tel)); fd.set('tipo', d.tipo === 'carro' ? 'Carro' : 'Moto'); fd.set('enviado_em', new Date().toLocaleString('pt-BR'));
+      fd.set('tel', fmtTel(d.tel)); fd.set('tipo', outros ? d.tipo : d.tipo === 'carro' ? 'Carro' : 'Moto'); if (outros) { ['modelo','ano','placa','uso','fipe','idade'].forEach(k => fd.delete(k)); } else { fd.delete('produto'); fd.delete('detalhes'); } fd.set('enviado_em', new Date().toLocaleString('pt-BR'));
       const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fd).toString() });
       salvo = res.ok;
     } catch (x) {}
@@ -1051,13 +1171,13 @@ $('form').addEventListener('submit', async e => {
   const primeiro = d.nome.split(' ')[0];
   if (salvo) {
     done.classList.remove('bad');
-    done.innerHTML = `<b>Recebemos, ${escH(primeiro)}!</b> Um corretor da Tás vai te chamar no ${escH(fmtTel(d.tel))} com as melhores opções para o seu ${escH(d.modelo)}.`;
+    done.innerHTML = `<b>Recebemos, ${escH(primeiro)}!</b> Um corretor da Tás vai te chamar no ${escH(fmtTel(d.tel))} com as melhores opções ${outros ? 'de seguro ' + escH(d.tipo.toLowerCase()) : 'para o seu ' + escH(d.modelo)}.`;
   } else {
     done.classList.add('bad');
     done.textContent = 'Não conseguimos registrar seu pedido agora. Tente de novo em instantes.';
   }
   done.hidden = false; btn.disabled = false; btn.textContent = 'Enviar cotação';
-  if (salvo) ['modelo','placa','email','fipe','cep','idade'].forEach(id => { if ($(id)) $(id).value = ''; });
+  if (salvo) ['modelo','placa','email','fipe','cep','idade','detalhes'].forEach(id => { if ($(id)) $(id).value = ''; });
 });
 $('mc-planos').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (!b) return; curPlano = b.dataset.p; renderRes(); });
 let escolhaOp = null, payForma = 'cartao', payN = {};
@@ -1278,7 +1398,7 @@ function renderCRM(){
   const vis = base.filter(r => (filtro === 'todos' || filtro === 'arquivadas' || r.status === filtro) && (!q || [r.nome,r.tel,r.placa,r.modelo,r.email].join(' ').toLowerCase().includes(q)));
   visCache = vis;
   const keys = new Set(all.map(r => r.key)); [...marcados].forEach(k => { if (!keys.has(k)) marcados.delete(k); });
-  $('crm-rows').innerHTML = vis.map(r => { const t = dt(r.ts); return `<tr data-k="${escH(r.key)}" class="${r.key===selKey?'sel':''}"><td class="ck"><input type="checkbox" data-ck="${escH(r.key)}" aria-label="Selecionar cotação de ${escH(r.nome)}" ${marcados.has(r.key)?'checked':''}></td><td>${t.d}<small>${t.h}</small></td><td><b>${escH(r.nome)}</b><small>${escH(fmtTel(r.tel))}</small></td><td>${r.tipo==='carro'?'Auto':'Moto'}</td><td>${escH(r.modelo)}<small>${escH(r.ano)} · ${escH(r.uso)}</small></td><td>${r.placa?`<span class="plate-s">${escH(r.placa)}</span>`:'<small>—</small>'}</td><td>${r.escolha?`<b>${escH(r.escolha.seguradora)}</b><small>${escH(r.escolha.plano)} · ${r.escolha.pagamento?escH(r.escolha.pagamento.forma)+(r.escolha.pagamento.parcelas>1?' '+r.escolha.pagamento.parcelas+'x':''):brl(r.escolha.valor)+'/ano'}</small>`:'<small>não escolheu</small>'}</td><td><span class="stt s-${r.status}">${SLABEL[r.status]}</span>${r.arq?'<span class="arq-tag">Arquivada</span>':''}</td></tr>`; }).join('');
+  $('crm-rows').innerHTML = vis.map(r => { const t = dt(r.ts); return `<tr data-k="${escH(r.key)}" class="${r.key===selKey?'sel':''}"><td class="ck"><input type="checkbox" data-ck="${escH(r.key)}" aria-label="Selecionar cotação de ${escH(r.nome)}" ${marcados.has(r.key)?'checked':''}></td><td>${t.d}<small>${t.h}</small></td><td><b>${escH(r.nome)}</b><small>${escH(fmtTel(r.tel))}</small></td><td>${(r.tipo==='carro'?'Auto':r.tipo==='moto'?'Moto':escH(r.tipo||'—'))}</td><td>${escH(r.modelo)}<small>${escH(r.ano)} · ${escH(r.uso)}</small></td><td>${r.placa?`<span class="plate-s">${escH(r.placa)}</span>`:'<small>—</small>'}</td><td>${r.escolha?`<b>${escH(r.escolha.seguradora)}</b><small>${escH(r.escolha.plano)} · ${r.escolha.pagamento?escH(r.escolha.pagamento.forma)+(r.escolha.pagamento.parcelas>1?' '+r.escolha.pagamento.parcelas+'x':''):brl(r.escolha.valor)+'/ano'}</small>`:'<small>não escolheu</small>'}</td><td><span class="stt s-${r.status}">${SLABEL[r.status]}</span>${r.arq?'<span class="arq-tag">Arquivada</span>':''}</td></tr>`; }).join('');
   const allBox = $('crm-all'); const visMarc = vis.filter(r => marcados.has(r.key)).length;
   allBox.checked = vis.length > 0 && visMarc === vis.length; allBox.indeterminate = visMarc > 0 && visMarc < vis.length;
   $('crm-empty').hidden = vis.length > 0;
@@ -1305,7 +1425,7 @@ function renderDet(){
   const t = dt(r.ts);
   box.innerHTML = `<h3>${escH(r.nome)}</h3><p class="when">Pediu em ${t.d} às ${t.h} · origem: ${escH(r.origem||'Site')}</p>
     <dl><dt>Telefone</dt><dd class="row">${escH(fmtTel(r.tel))} <button class="mini-btn" type="button" data-copy="${escH(r.tel)}">Copiar</button></dd>
-    <dt>E-mail</dt><dd>${escH(r.email) || '—'}</dd><dt>Seguro</dt><dd>${r.tipo==='carro'?'Auto':'Moto'}</dd>
+    <dt>E-mail</dt><dd>${escH(r.email) || '—'}</dd><dt>Seguro</dt><dd>${(r.tipo==='carro'?'Auto':r.tipo==='moto'?'Moto':escH(r.tipo||'—'))}</dd>${r.detalhes?`<dt>Detalhes</dt><dd>${escH(r.detalhes)}</dd>`:''}
     <dt>Veículo</dt><dd>${escH(r.modelo)} (${escH(r.ano)})</dd><dt>Placa</dt><dd>${r.placa?`<span class="plate-s">${escH(r.placa)}</span>`:'—'}</dd><dt>Uso</dt><dd>${escH(r.uso)}</dd><dt>Valor FIPE</dt><dd>${r.fipe?brl(+r.fipe):'—'}</dd><dt>CEP</dt><dd>${escH(r.cep||'—')}</dd><dt>Condutor</dt><dd>${r.idade?escH(r.idade)+' anos':'—'}</dd></dl>
     ${r.escolha&&r.escolha.pagamento?`<h4>Pagamento escolhido</h4><p style="font-weight:700">${escH(r.escolha.pagamento.forma)} · ${r.escolha.pagamento.parcelas>1?r.escolha.pagamento.parcelas+'x de '+brl(r.escolha.pagamento.valorParcela):brl(r.escolha.pagamento.total)}</p>`:''}<h4>Multicálculo (estimativa)</h4>${Array.isArray(r.opcoes)&&r.opcoes.length?`<div class="crm-opts">${r.opcoes.map(o=>`<div class="${r.escolha&&r.escolha.seguradora===o.seguradora?'on':''}"><span>${r.escolha&&r.escolha.seguradora===o.seguradora?'✓ ':''}${escH(o.seguradora)} · ${escH(o.plano)}</span><span>${brl(o.valor)}</span></div>`).join('')}</div>`:'<p class="crm-hint">Sem cálculo.</p>'}
     <h4>Status</h4><div class="sbtns">${STATUS.map(([k,l]) => `<button type="button" class="stt s-${k}" data-s="${k}" aria-pressed="${r.status===k}">${l}</button>`).join('')}</div>
@@ -1382,7 +1502,7 @@ $('crm-q').addEventListener('input', e => { busca = e.target.value; renderCRM();
 $('crm-export').addEventListener('click', async () => {
   const head = ['Data','Hora','Nome','Telefone','E-mail','Seguro','Modelo','Ano','Placa','Uso','Valor FIPE','CEP','Idade','Seguradora escolhida','Plano','Valor estimado','Pagamento','Status','Arquivada','Valor fechado','Anotações','Origem'];
   const cell = v => `"${String(v ?? '').replace(/"/g,'""')}"`;
-  const lines = rowsCache.map(r => { const t = dt(r.ts); return [t.d,t.h,r.nome,fmtTel(r.tel),r.email,r.tipo==='carro'?'Auto':'Moto',r.modelo,r.ano,r.placa,r.uso,r.fipe,r.cep,r.idade,r.escolha?r.escolha.seguradora:'',r.escolha?r.escolha.plano:'',r.escolha?r.escolha.valor:'',r.escolha&&r.escolha.pagamento?`${r.escolha.pagamento.forma} ${r.escolha.pagamento.parcelas}x de ${r.escolha.pagamento.valorParcela}`:'',SLABEL[r.status],r.arq?'Sim':'Não',r.valor,r.nota,r.origem].map(cell).join(';'); });
+  const lines = rowsCache.map(r => { const t = dt(r.ts); return [t.d,t.h,r.nome,fmtTel(r.tel),r.email,(r.tipo==='carro'?'Auto':r.tipo==='moto'?'Moto':(r.tipo||'')),r.modelo,r.ano,r.placa,r.uso,r.fipe,r.cep,r.idade,r.escolha?r.escolha.seguradora:'',r.escolha?r.escolha.plano:'',r.escolha?r.escolha.valor:'',r.escolha&&r.escolha.pagamento?`${r.escolha.pagamento.forma} ${r.escolha.pagamento.parcelas}x de ${r.escolha.pagamento.valorParcela}`:'',SLABEL[r.status],r.arq?'Sim':'Não',r.valor,r.nota,r.origem].map(cell).join(';'); });
   const csv = '﻿' + [head.map(cell).join(';'), ...lines].join('\r\n');
   try { const dl = await window.claude.use('downloads'); if (!dl) throw 0; await dl.save({ filename: `cotacoes-tas-seguro-${new Date().toISOString().slice(0,10)}.csv`, data: csv }); } catch (e) {}
 });
@@ -1432,7 +1552,7 @@ async function importarNetlify(file){
       if (existentes.has(docId)) { repetidos++; continue; }
       const tipoTxt = norm(g('tipo'));
       const lead = { id: docId.slice(3), ts, origem: 'Site (Netlify)', nome, tel, email: g('email'), modelo: g('modelo'), ano: g('ano'), placa: g('placa').toUpperCase(), uso: g('uso'),
-        fipe: g('fipe').replace(/\D/g,''), cep: g('cep').replace(/\D/g,''), idade: g('idade').replace(/\D/g,''), tipo: tipoTxt.startsWith('carro') || tipoTxt.startsWith('auto') ? 'carro' : 'moto' };
+        fipe: g('fipe').replace(/\D/g,''), cep: g('cep').replace(/\D/g,''), idade: g('idade').replace(/\D/g,''), tipo: tipoTxt.startsWith('carro') || tipoTxt.startsWith('auto') ? 'carro' : tipoTxt.startsWith('moto') ? 'moto' : g('tipo'), detalhes: g('detalhes') };
       await DB.doc('leads/' + docId).set({ items: [lead], atualizado: new Date().toISOString() });
       existentes.add(docId); novos++;
     }

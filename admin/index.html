@@ -207,7 +207,7 @@ async function carregar() {
 const tel = t => { let d = String(t || '').replace(/\D/g, ''); if (d.startsWith('55') && d.length > 11) d = d.slice(2); return d.length === 11 ? `(${d.slice(0,2)}) ${d.slice(2,3)} ${d.slice(3,7)}-${d.slice(7)}` : d.length === 10 ? `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}` : (t || ''); };
 const telD = t => { let d = String(t || '').replace(/\D/g, ''); if (d.startsWith('55') && d.length > 11) d = d.slice(2); return d; };
 const dt = iso => { const d = new Date(iso); return isNaN(d) ? { d: '', h: '' } : { d: d.toLocaleDateString('pt-BR'), h: d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) }; };
-const linha = i => ({ ...i, st: i.status || 'novo', arq: !!i.arquivado, nome: i.dados.nome || '', fone: i.dados.tel || '', email: i.dados.email || '', modelo: i.dados.modelo || '', ano: i.dados.ano || '', placa: (i.dados.placa || '').toUpperCase(), uso: i.dados.uso || '', tipo: i.dados.tipo || '', fipe: i.dados.fipe || '', cep: i.dados.cep || '', idade: i.dados.idade || '' });
+const linha = i => ({ ...i, st: i.status || 'novo', arq: !!i.arquivado, nome: i.dados.nome || '', fone: i.dados.tel || '', email: i.dados.email || '', modelo: i.dados.modelo || '', ano: i.dados.ano || '', placa: (i.dados.placa || '').toUpperCase(), uso: i.dados.uso || '', tipo: i.dados.tipo || '', detalhes: i.dados.detalhes || '', fipe: i.dados.fipe || '', cep: i.dados.cep || '', idade: i.dados.idade || '' });
 
 function render() {
   const all = itens.map(linha).sort((a, b) => String(b.criado).localeCompare(String(a.criado)));
@@ -240,7 +240,7 @@ function renderDet() {
   d.dataset.id = r.id; const t = dt(r.criado), dg = telD(r.fone);
   d.innerHTML = `<h3>${esc(r.nome)}</h3><p class="when">Pediu em ${t.d} às ${t.h} · nº ${esc(r.numero || '')}</p>
     <dl><dt>Telefone</dt><dd>${esc(tel(r.fone))}${dg ? ` · <a class="wa" href="https://wa.me/55${dg}" target="_blank" rel="noopener">WhatsApp</a>` : ''}</dd>
-    <dt>E-mail</dt><dd>${esc(r.email) || '—'}</dd><dt>Seguro</dt><dd>${esc(r.tipo) || '—'}</dd><dt>Veículo</dt><dd>${esc(r.modelo)} ${r.ano ? '(' + esc(r.ano) + ')' : ''}</dd>
+    <dt>E-mail</dt><dd>${esc(r.email) || '—'}</dd><dt>Seguro</dt><dd>${esc(r.tipo) || '—'}</dd>${r.detalhes ? `<dt>Detalhes</dt><dd>${esc(r.detalhes)}</dd>` : ''}<dt>Veículo</dt><dd>${esc(r.modelo)} ${r.ano ? '(' + esc(r.ano) + ')' : ''}</dd>
     <dt>Placa</dt><dd>${r.placa ? `<span class="plate">${esc(r.placa)}</span>` : '—'}</dd><dt>Uso</dt><dd>${esc(r.uso) || '—'}</dd><dt>Valor FIPE</dt><dd>${esc(r.fipe) || '—'}</dd><dt>CEP</dt><dd>${esc(r.cep) || '—'}</dd><dt>Idade</dt><dd>${esc(r.idade) || '—'}</dd></dl>
     <h4>Status</h4><div class="sbt">${STATUS.map(([k,l]) => `<button type="button" class="stt s-${k}" data-s="${k}" aria-pressed="${r.st===k}">${l}</button>`).join('')}</div>
     <h4>Valor da apólice fechada (R$)</h4><input class="val" id="d-val" inputmode="decimal" placeholder="Ex.: 1.850,00" value="${esc(r.valor)}">
