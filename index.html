@@ -177,6 +177,7 @@ header.scrolled{border-bottom-color:var(--line)}
 .done a{color:var(--ok);font-weight:700}
 .done.bad{background:#fdecef;border-color:#f3b3c1}
 .mini-btn{border:1px solid var(--line-2);background:#fff;color:var(--ink);font-weight:700;font-size:13.5px;padding:8px 12px;border-radius:10px;cursor:pointer}
+.placa-st{font-size:12.5px;color:var(--dim)}.placa-st.ok{color:var(--ok);font-weight:600}.placa-st.load::before{content:"";display:inline-block;width:10px;height:10px;margin-right:7px;border-radius:50%;border:2px solid var(--blue);border-right-color:transparent;vertical-align:-1px;animation:gira .7s linear infinite}
 [data-veh][hidden],[data-outros][hidden]{display:none!important}
 @media (max-width:460px){.fields{grid-template-columns:1fr}.quote{padding:22px}}
 
@@ -519,9 +520,9 @@ body.crm-mode header .links{display:none}
           <div class="f"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="voce@email.com"></div>
           <div class="f full" data-outros hidden><label for="produto">Qual seguro?</label><select id="produto" name="produto"><option value="">Escolha o seguro</option><option>Vida</option><option>Residencial</option><option>Empresarial</option><option>Viagem</option><option>Celular e eletrônicos</option><option>Frotas</option><option>Saúde e odontológico</option><option>Fiança de aluguel</option><option>Caminhão e carga</option><option>Outro</option></select></div>
           <div class="f full" data-outros hidden><label for="detalhes">Conte um pouco do que você quer proteger</label><textarea id="detalhes" name="detalhes" rows="3" placeholder="Ex.: apartamento de 2 quartos em Boa Viagem; viagem para Portugal em março, 2 pessoas…"></textarea></div>
+          <div class="f full" data-veh><label for="placa">Placa do veículo</label><input id="placa" name="placa" placeholder="ABC1D23" maxlength="7" autocomplete="off" autocapitalize="characters"><small class="placa-st" id="placa-st" aria-live="polite">Digite a placa que a gente preenche o resto.</small></div>
           <div class="f" data-veh><label for="modelo">Modelo</label><input id="modelo" name="modelo" list="modelos" autocomplete="off" placeholder="Ex.: CG 160 Fan"><datalist id="modelos"></datalist></div>
           <div class="f" data-veh><label for="ano">Ano</label><select id="ano" name="ano"></select></div>
-          <div class="f" data-veh><label for="placa">Placa do veículo</label><input id="placa" name="placa" placeholder="ABC1D23" maxlength="7" autocomplete="off" autocapitalize="characters"></div>
           <div class="f" data-veh><label for="uso">Uso</label><select id="uso" name="uso"><option>Particular</option><option>Trabalho / app</option><option>Entregas</option></select></div>
           <div class="f" data-veh><label for="fipe">Valor FIPE</label><input id="fipe" name="fipe" inputmode="numeric" placeholder="Ex.: R$ 18.000"><small class="fipe-hint" id="fipe-hint"></small></div>
           <div class="f"><label for="cep">CEP</label><input id="cep" name="cep" inputmode="numeric" placeholder="00000-000" maxlength="9"></div>
@@ -825,6 +826,50 @@ $('modelo').addEventListener('input', preencherFipe);
 ano.addEventListener('change', preencherFipe);
 document.querySelectorAll('input[name="tipo"]').forEach(r => r.addEventListener('change', () => { listaModelos(); fipeManual = false; preencherFipe(); }));
 listaModelos();
+
+/* ================= CONSULTA DE PLACA ================= */
+(function(){
+  const st = $('placa-st'), padrao = st.textContent;
+  let ultima = '', ctrl = null;
+  const valida = p => /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(p);
+  const msg = (t, cls) => { st.textContent = t; st.className = 'placa-st' + (cls ? ' ' + cls : ''); };
+  async function consulta(p){
+    if (ctrl) ctrl.abort();
+    ctrl = new AbortController();
+    msg('Buscando os dados da placa…', 'load');
+    try {
+      const r = await fetch('/api/placa', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ placa: p }), signal: ctrl.signal });
+      const d = await r.json().catch(() => ({}));
+      if (placa.value !== p) return;
+      if (!r.ok || d.erro) { msg('Não deu para buscar a placa agora. Preencha os dados abaixo.'); return; }
+      if (!d.encontrado) { msg('Não encontramos essa placa. Confira ou preencha os dados abaixo.'); return; }
+      if (d.tipo && d.tipo !== formVeh && formVeh !== 'outros') {
+        const r2 = $(d.tipo === 'carro' ? 't-carro' : 't-moto'); r2.checked = true; r2.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      const nome = [d.marca, d.modelo, d.versao].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+      if (nome) $('modelo').value = nome;
+      if (d.ano_modelo) {
+        const a = String(d.ano_modelo);
+        if (![...ano.options].some(o => o.value === a)) { const o = document.createElement('option'); o.textContent = a; ano.appendChild(o); }
+        ano.value = a;
+      }
+      if (d.fipe_valor) {
+        fipeIn.value = 'R$ ' + Number(d.fipe_valor).toLocaleString('pt-BR');
+        fipeManual = true;
+        $('fipe-hint').textContent = 'Valor FIPE puxado pela placa. Confira e ajuste se precisar.';
+      }
+      msg(`Encontramos: ${nome || 'veículo'}${d.ano_modelo ? ' ' + d.ano_modelo : ''}${d.cor ? ' · ' + d.cor : ''}. Confira os dados abaixo.`, 'ok');
+    } catch (e) {
+      if (e.name !== 'AbortError') msg('Não deu para buscar a placa agora. Preencha os dados abaixo.');
+    }
+  }
+  placa.addEventListener('input', () => {
+    const p = placa.value;
+    if (!valida(p)) { if (p.length < 7) msg(padrao); else msg('Placa inválida. Use o formato ABC1D23 ou ABC1234.'); return; }
+    if (p === ultima) return;
+    ultima = p; consulta(p);
+  });
+})();
 
 let cur = null, curPlano = 'completo';
 const cepIn = $('cep');
