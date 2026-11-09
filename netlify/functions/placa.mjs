@@ -80,7 +80,7 @@ export default async (req, context) => {
   } catch {}
 
   const chave = process.env.CDP_API_KEY;
-  if (!chave) return resposta({ erro: "sem-chave" }, 503);
+  if (!chave) { console.log("consulta de placa: variável CDP_API_KEY não encontrada"); return resposta({ erro: "sem-chave" }, 503); }
 
   let r;
   try {
@@ -95,12 +95,14 @@ export default async (req, context) => {
       body: JSON.stringify({ plate: placa }),
       signal: AbortSignal.timeout(12000),
     });
-  } catch {
+  } catch (e) {
+    console.log("consulta de placa: não conectou na API:", e && (e.name + " " + e.message));
     return resposta({ erro: "indisponivel" }, 503);
   }
 
   let corpo = null;
   try { corpo = await r.json(); } catch {}
+  console.log("consulta de placa: resposta", r.status, corpo && (corpo.code || corpo.result));
   if (r.status !== 201 || !corpo) {
     const codigo = (corpo && corpo.code) || `http-${r.status}`;
     console.log("consulta de placa falhou:", codigo); // aparece nos logs da função no Netlify
