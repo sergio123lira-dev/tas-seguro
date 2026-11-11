@@ -1364,7 +1364,7 @@ addEventListener('scroll', updBar, {passive:true}); updBar();
 <!-- Mascote Tás: cantinho animado -->
 <style>
 .tas{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:10px;font-family:var(--body)}
-.tas-av{width:92px;height:92px;border-radius:50%;padding:0;border:3px solid #fff;background:var(--blue);overflow:hidden;cursor:pointer;box-shadow:0 12px 30px -10px rgba(10,77,255,.6),0 0 0 4px rgba(10,77,255,.14);position:relative;transition:transform .2s}
+.tas-av{width:92px;height:92px;border-radius:50%;padding:0;border:3px solid #fff;background:var(--blue) url(/icones/tas-avatar.jpg) center/cover no-repeat;overflow:hidden;cursor:pointer;box-shadow:0 12px 30px -10px rgba(10,77,255,.6),0 0 0 4px rgba(10,77,255,.14);position:relative;transition:transform .2s}
 .tas-av:hover{transform:scale(1.05)}
 .tas-av video{width:100%;height:100%;object-fit:cover;object-position:54% 50%;transform:scale(1.75);transform-origin:53% 28%;display:block}
 .tas-av::after{content:"";position:absolute;right:6px;bottom:8px;width:14px;height:14px;border-radius:50%;background:var(--ok);border:2px solid #fff}
@@ -1386,10 +1386,10 @@ addEventListener('scroll', updBar, {passive:true}); updBar();
 @media (max-width:600px){.tas{right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px))}.tas-av{width:72px;height:72px}.tas-bal{font-size:14px;max-width:200px}}
 @media (prefers-reduced-motion:reduce){.tas-bal,.tas-av{transition:none}}
 </style>
-<div class="tas" id="tas" hidden>
+<div class="tas" id="tas">
   <div class="tas-card" id="tas-card" hidden role="dialog" aria-label="Tás, da Tás Seguro">
     <button type="button" class="tas-x" id="tas-card-x" aria-label="Fechar">&times;</button>
-    <video id="tas-fala" src="https://cms-toolkit-artifacts.artlist.io/content/-m-u-l-t-i_-t-o_-v-i-d-e-o-v1/media__8/-m-u-l-t-i_-t-o_-v-i-d-e-o-f681e78a-8f17-43a5-85a5-3c850be46f86.mp4?Expires=2109762868&Key-Pair-Id=K2ZDLYDZI2R1DF&Signature=eF5PtUfTxI8n4X5dU1QLTN2DZzhgpux4QNBxq0O4Ijc0QW1kdltL6csyVbxUAEfU8B3Y3qoTF2WDg~IkwufflR8w7j~9rEoMIO2fgqPtEq19g-4~-2BM4nXJTMPa1saDHRlDYWBwYXTkJ0l3QhuJnbcGAQyk8Zqh~NQSwq8vAyFC0Y6pB89WEYHymVc4xglOJsLobfD4gQqssRP80~C-J91D9zljqIL9zdk4IJsuOqbEEiQP9O4dik6RiXlyZkUyR3MV51~Z2zFwRMLIY11ykHA-Xrz0pxJtidwcjnFPRdW4EqCiLxzSGM92m2CwgdGFhgyl9Qee4FD2d6OBw714Ng__" playsinline preload="none"></video>
+    <video id="tas-fala" poster="/icones/tas-capa.jpg" src="https://cms-toolkit-artifacts.artlist.io/content/-m-u-l-t-i_-t-o_-v-i-d-e-o-v1/media__8/-m-u-l-t-i_-t-o_-v-i-d-e-o-f681e78a-8f17-43a5-85a5-3c850be46f86.mp4?Expires=2109762868&Key-Pair-Id=K2ZDLYDZI2R1DF&Signature=eF5PtUfTxI8n4X5dU1QLTN2DZzhgpux4QNBxq0O4Ijc0QW1kdltL6csyVbxUAEfU8B3Y3qoTF2WDg~IkwufflR8w7j~9rEoMIO2fgqPtEq19g-4~-2BM4nXJTMPa1saDHRlDYWBwYXTkJ0l3QhuJnbcGAQyk8Zqh~NQSwq8vAyFC0Y6pB89WEYHymVc4xglOJsLobfD4gQqssRP80~C-J91D9zljqIL9zdk4IJsuOqbEEiQP9O4dik6RiXlyZkUyR3MV51~Z2zFwRMLIY11ykHA-Xrz0pxJtidwcjnFPRdW4EqCiLxzSGM92m2CwgdGFhgyl9Qee4FD2d6OBw714Ng__" playsinline preload="none"></video>
     <div class="tas-card-b">
       <p><b>Oi, eu sou o Tás!</b> Cotação grátis, em várias seguradoras, sem papelada.</p>
       <div class="tas-acts"><a class="tas-go" href="#cotar" id="tas-go">Fazer cotação</a><a class="tas-wa" id="tas-wa" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a></div>
@@ -1400,7 +1400,7 @@ addEventListener('scroll', updBar, {passive:true}); updBar();
     Oi! Eu sou o <b>Tás</b> 👋<br>Vamos fazer seu seguro?
   </div>
   <button type="button" class="tas-av" id="tas-av" aria-label="Falar com o Tás">
-    <video id="tas-loop" src="https://cms-toolkit-artifacts.artlist.io/content/-e-x-t-e-r-n-a-l_-i-m-a-g-e_-t-o_-v-i-d-e-o-v1/media__10/-e-x-t-e-r-n-a-l_-i-m-a-g-e_-t-o_-v-i-d-e-o-28c81d88-98e8-401e-9447-215871c9efa3.mp4?Expires=2109761891&Key-Pair-Id=K2ZDLYDZI2R1DF&Signature=1qRNHBzxIQnSNo4dCGr07Y2EpCoRhxhr9OaWT3Y35vhHWL07tcOSprO9qJGqqXR6CgIGUX2DDF-gw2eZA5C074rv7s6AGoSHchIywLZGeuhwNZ1McjLT5UhWk7vAR292wb72gpaGuW~aFOeNWFxqrwGqKUHqQAT3T8m~rBNiMKVaflkP0ZvOrMRAakBvaEr3gDAGDsUDPML48ArvACEd8OlfwdCdo6yADqBbLvcxxYxEMtAXlxp~aNq8Ohd81LXCYN5PM~~b6fq0SIa9PSg3ZqlO8k5pocS-8O4eWOcoZ3Ow5pGHIndB15NmCXhjhBol2gTfCHnVFltDl2OkDQRQGQ__" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+    <video id="tas-loop" src="https://cms-toolkit-artifacts.artlist.io/content/-e-x-t-e-r-n-a-l_-i-m-a-g-e_-t-o_-v-i-d-e-o-v1/media__10/-e-x-t-e-r-n-a-l_-i-m-a-g-e_-t-o_-v-i-d-e-o-28c81d88-98e8-401e-9447-215871c9efa3.mp4?Expires=2109761891&Key-Pair-Id=K2ZDLYDZI2R1DF&Signature=1qRNHBzxIQnSNo4dCGr07Y2EpCoRhxhr9OaWT3Y35vhHWL07tcOSprO9qJGqqXR6CgIGUX2DDF-gw2eZA5C074rv7s6AGoSHchIywLZGeuhwNZ1McjLT5UhWk7vAR292wb72gpaGuW~aFOeNWFxqrwGqKUHqQAT3T8m~rBNiMKVaflkP0ZvOrMRAakBvaEr3gDAGDsUDPML48ArvACEd8OlfwdCdo6yADqBbLvcxxYxEMtAXlxp~aNq8Ohd81LXCYN5PM~~b6fq0SIa9PSg3ZqlO8k5pocS-8O4eWOcoZ3Ow5pGHIndB15NmCXhjhBol2gTfCHnVFltDl2OkDQRQGQ__" muted loop autoplay playsinline preload="auto" aria-hidden="true"></video>
   </button>
 </div>
 <script>
@@ -1411,12 +1411,10 @@ addEventListener('scroll', updBar, {passive:true}); updBar();
   const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let fechou = false; try { fechou = sessionStorage.getItem('tasBal') === '0'; } catch (e) {}
   if (typeof WHATSAPP !== 'undefined') $('tas-wa').href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent('Oi! Vim pelo site da Tás Seguro e quero fazer uma cotação.');
-  loop.addEventListener('error', () => { box.hidden = true; });
-  loop.addEventListener('loadeddata', () => {
-    box.hidden = false;
-    if (!reduz) loop.play().catch(() => {});
-    if (!fechou) setTimeout(() => { if (card.hidden) bal.classList.add('on'); }, 2500);
-  }, { once: true });
+  const semVideo = v => { v.style.visibility = 'hidden'; };
+  loop.addEventListener('error', () => semVideo(loop));
+  if (reduz) { loop.removeAttribute('autoplay'); loop.pause(); } else loop.play().catch(() => {});
+  if (!fechou) setTimeout(() => { if (card.hidden) bal.classList.add('on'); }, 2500);
   function abrir() {
     bal.classList.remove('on'); card.hidden = false; loop.pause();
     fala.currentTime = 0; fala.play().catch(() => {});
