@@ -1,0 +1,17 @@
+name: Baixar videos do Tas
+on:
+  push:
+    branches: [audio-temp]
+    paths: [baixar.txt]
+permissions:
+  contents: write
+jobs:
+  baixar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          while read -r nome url; do [ -n "$nome" ] && curl -fsSL -o "$nome" "$url"; done < baixar.txt
+          ls -la *.mp4
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git add *.mp4 && git commit -m "Vídeos do Tás baixados" && git push
