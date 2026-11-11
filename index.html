@@ -1360,4 +1360,78 @@ function updBar(){ const h = document.documentElement.scrollHeight - innerHeight
 addEventListener('scroll', updBar, {passive:true}); updBar();
 
 </script>
+
+<!-- Mascote Tás: cantinho animado -->
+<style>
+.tas{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:10px;font-family:var(--body)}
+.tas-av{width:92px;height:92px;border-radius:50%;padding:0;border:3px solid #fff;background:var(--blue);overflow:hidden;cursor:pointer;box-shadow:0 12px 30px -10px rgba(10,77,255,.6),0 0 0 4px rgba(10,77,255,.14);position:relative;transition:transform .2s}
+.tas-av:hover{transform:scale(1.05)}
+.tas-av video{width:100%;height:100%;object-fit:cover;object-position:54% 50%;transform:scale(1.75);transform-origin:53% 28%;display:block}
+.tas-av::after{content:"";position:absolute;right:6px;bottom:8px;width:14px;height:14px;border-radius:50%;background:var(--ok);border:2px solid #fff}
+.tas-bal{position:relative;max-width:230px;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:18px 18px 4px 18px;padding:12px 34px 12px 14px;box-shadow:var(--shadow);font-size:15px;line-height:1.35;cursor:pointer;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .35s,transform .35s;pointer-events:none}
+.tas-bal.on{opacity:1;transform:none;pointer-events:auto}
+.tas-bal b{font-family:var(--display);color:var(--blue)}
+.tas-x{position:absolute;top:6px;right:6px;width:24px;height:24px;border:0;border-radius:50%;background:var(--bg-2);color:var(--soft);font-size:15px;line-height:1;cursor:pointer}
+.tas-card{width:min(340px,calc(100vw - 36px));background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 60px -18px rgba(13,21,48,.35);overflow:hidden}
+.tas-card video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--blue)}
+.tas-card-b{padding:14px 16px 16px}
+.tas-card-b p{margin:0 0 12px;font-size:15px;color:var(--soft)}
+.tas-card-b p b{color:var(--ink);font-family:var(--display)}
+.tas-acts{display:flex;gap:8px;flex-wrap:wrap}
+.tas-acts a{flex:1;min-width:130px;text-align:center;text-decoration:none;font-weight:700;font-size:14.5px;padding:11px 12px;border-radius:12px}
+.tas-go{background:var(--blue);color:#fff}
+.tas-wa{background:#e9f9ef;color:#0b7a43}
+.tas-card .tas-x{top:10px;right:10px;background:rgba(255,255,255,.9)}
+.tas-card{position:relative}
+@media (max-width:600px){.tas{right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px))}.tas-av{width:72px;height:72px}.tas-bal{font-size:14px;max-width:200px}}
+@media (prefers-reduced-motion:reduce){.tas-bal,.tas-av{transition:none}}
+</style>
+<div class="tas" id="tas" hidden>
+  <div class="tas-card" id="tas-card" hidden role="dialog" aria-label="Tás, da Tás Seguro">
+    <button type="button" class="tas-x" id="tas-card-x" aria-label="Fechar">&times;</button>
+    <video id="tas-fala" src="https://cms-toolkit-artifacts.artlist.io/content/-m-u-l-t-i_-t-o_-v-i-d-e-o-v1/media__8/-m-u-l-t-i_-t-o_-v-i-d-e-o-f681e78a-8f17-43a5-85a5-3c850be46f86.mp4?Expires=2109762868&Key-Pair-Id=K2ZDLYDZI2R1DF&Signature=eF5PtUfTxI8n4X5dU1QLTN2DZzhgpux4QNBxq0O4Ijc0QW1kdltL6csyVbxUAEfU8B3Y3qoTF2WDg~IkwufflR8w7j~9rEoMIO2fgqPtEq19g-4~-2BM4nXJTMPa1saDHRlDYWBwYXTkJ0l3QhuJnbcGAQyk8Zqh~NQSwq8vAyFC0Y6pB89WEYHymVc4xglOJsLobfD4gQqssRP80~C-J91D9zljqIL9zdk4IJsuOqbEEiQP9O4dik6RiXlyZkUyR3MV51~Z2zFwRMLIY11ykHA-Xrz0pxJtidwcjnFPRdW4EqCiLxzSGM92m2CwgdGFhgyl9Qee4FD2d6OBw714Ng__" playsinline preload="none"></video>
+    <div class="tas-card-b">
+      <p><b>Oi, eu sou o Tás!</b> Cotação grátis, em várias seguradoras, sem papelada.</p>
+      <div class="tas-acts"><a class="tas-go" href="#cotar" id="tas-go">Fazer cotação</a><a class="tas-wa" id="tas-wa" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a></div>
+    </div>
+  </div>
+  <div class="tas-bal" id="tas-bal" role="button" tabindex="0">
+    <button type="button" class="tas-x" id="tas-bal-x" aria-label="Fechar mensagem">&times;</button>
+    Oi! Eu sou o <b>Tás</b> 👋<br>Vamos fazer seu seguro?
+  </div>
+  <button type="button" class="tas-av" id="tas-av" aria-label="Falar com o Tás">
+    <video id="tas-loop" src="https://cms-toolkit-artifacts.artlist.io/content/-e-x-t-e-r-n-a-l_-i-m-a-g-e_-t-o_-v-i-d-e-o-v1/media__10/-e-x-t-e-r-n-a-l_-i-m-a-g-e_-t-o_-v-i-d-e-o-28c81d88-98e8-401e-9447-215871c9efa3.mp4?Expires=2109761891&Key-Pair-Id=K2ZDLYDZI2R1DF&Signature=1qRNHBzxIQnSNo4dCGr07Y2EpCoRhxhr9OaWT3Y35vhHWL07tcOSprO9qJGqqXR6CgIGUX2DDF-gw2eZA5C074rv7s6AGoSHchIywLZGeuhwNZ1McjLT5UhWk7vAR292wb72gpaGuW~aFOeNWFxqrwGqKUHqQAT3T8m~rBNiMKVaflkP0ZvOrMRAakBvaEr3gDAGDsUDPML48ArvACEd8OlfwdCdo6yADqBbLvcxxYxEMtAXlxp~aNq8Ohd81LXCYN5PM~~b6fq0SIa9PSg3ZqlO8k5pocS-8O4eWOcoZ3Ow5pGHIndB15NmCXhjhBol2gTfCHnVFltDl2OkDQRQGQ__" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+  </button>
+</div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const box = $('tas'), av = $('tas-av'), bal = $('tas-bal'), card = $('tas-card');
+  const loop = $('tas-loop'), fala = $('tas-fala');
+  const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let fechou = false; try { fechou = sessionStorage.getItem('tasBal') === '0'; } catch (e) {}
+  if (typeof WHATSAPP !== 'undefined') $('tas-wa').href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent('Oi! Vim pelo site da Tás Seguro e quero fazer uma cotação.');
+  loop.addEventListener('error', () => { box.hidden = true; });
+  loop.addEventListener('loadeddata', () => {
+    box.hidden = false;
+    if (!reduz) loop.play().catch(() => {});
+    if (!fechou) setTimeout(() => { if (card.hidden) bal.classList.add('on'); }, 2500);
+  }, { once: true });
+  function abrir() {
+    bal.classList.remove('on'); card.hidden = false; loop.pause();
+    fala.currentTime = 0; fala.play().catch(() => {});
+  }
+  function fechar() {
+    card.hidden = true; fala.pause();
+    if (!reduz) loop.play().catch(() => {});
+  }
+  av.addEventListener('click', () => card.hidden ? abrir() : fechar());
+  bal.addEventListener('click', e => { if (e.target.id !== 'tas-bal-x') abrir(); });
+  bal.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); } });
+  $('tas-bal-x').addEventListener('click', e => { e.stopPropagation(); bal.classList.remove('on'); try { sessionStorage.setItem('tasBal', '0'); } catch (e) {} });
+  $('tas-card-x').addEventListener('click', fechar);
+  $('tas-go').addEventListener('click', fechar);
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !card.hidden) fechar(); });
+})();
+</script>
 </body></html>
