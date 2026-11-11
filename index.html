@@ -558,7 +558,7 @@ body.crm-mode header .links{display:none}
     <div>
       <span class="kick">Dúvidas</span>
       <h2>Perguntas frequentes</h2>
-      <p class="intro">Não achou sua resposta? Fala com a gente pelo (81) 90000-0000.</p>
+      <p class="intro">Não achou sua resposta? Fala com a gente pelo (81) 99791-6539.</p>
     </div>
     <div class="qa">
       <details open><summary>Vocês fazem só seguro de carro e moto?</summary><p>Não. A Tás faz seguro de tudo: carro, moto, vida, residencial, empresarial, viagem, celular e eletrônicos, frotas, saúde e odontológico, fiança de aluguel, caminhão e carga. Se o que você quer proteger não está na lista, fala com a gente que a gente cota.</p></details>
@@ -631,7 +631,7 @@ body.crm-mode header .links{display:none}
     </div>
     <div class="contact">
       <b>Fale com a gente</b>
-      <span>WhatsApp: (81) 90000-0000</span>
+      <span>WhatsApp: (81) 99791-6539</span>
       <span>Seg a sex, 8h às 18h · Sáb, 8h às 12h</span>
     </div>
   </div>
@@ -640,7 +640,7 @@ body.crm-mode header .links{display:none}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 // Troque pelo número real (DDI + DDD + número, só dígitos)
-const WHATSAPP = "5581900000000";
+const WHATSAPP = "5581997916539";
 const $ = id => document.getElementById(id);
 
 /* ================= MENU CELULAR ================= */
@@ -1005,7 +1005,7 @@ $('pay-ok').addEventListener('click', async () => {
     done.insertAdjacentHTML('beforeend', ' <span style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button type="button" class="btn btn-glass" id="pdf-cli" style="flex:1">Baixar em PDF</button><button type="button" class="btn btn-glass" id="png-cli" style="flex:1">Baixar imagem</button></span> <button type="button" class="mini-btn" id="mc-new" style="margin-top:10px">Fazer outra cotação</button>');
   } catch (x) {
     done.classList.add('bad');
-    done.textContent = 'Não foi possível enviar pelo site agora. Fale com a gente pelo (81) 90000-0000.';
+    done.textContent = 'Não foi possível enviar pelo site agora. Fale com a gente pelo (81) 99791-6539.';
   }
   done.hidden = false; btn.disabled = false; btn.textContent = 'Confirmar escolha';
 });
@@ -1112,7 +1112,7 @@ function desenharCotacao(r){
   c.fillStyle = TINT; c.fillRect(0, H-110, W, 110);
   c.fillStyle = BLUE; c.fillRect(0, H-110, W, 4);
   txt('Tás Seguro', M, H-48, `800 26px ${DISP}`, INK);
-  txt('SUSEP nº 232152952   ·   WhatsApp (81) 90000-0000', W-M, H-48, `500 22px ${BODY}`, SOFT, 'right');
+  txt('SUSEP nº 232152952   ·   WhatsApp (81) 99791-6539', W-M, H-48, `500 22px ${BODY}`, SOFT, 'right');
   return cv;
 }
 async function baixarCotacao(r, formato, btn){
