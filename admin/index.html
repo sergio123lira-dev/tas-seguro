@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Tás Seguro · Área do corretor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800;900&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#05081a; --bg-2:#0b1130; --card:#0c1335; --line:rgba(160,185,255,.18);
+  --ink:#eef2ff; --soft:#a3aed3; --dim:#6f7aa3; --cyan:#3fb4ff; --blue:#4f7cf3; --glow:#7fd0ff; --ok:#46d39a; --bad:#ff7a92;
+  --display:"Unbounded","Arial Black",Arial,sans-serif; --body:"Figtree",Arial,system-ui,sans-serif; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{min-height:100vh;background:radial-gradient(900px 500px at 100% 0%,#14216b,transparent 60%),var(--bg);color:var(--ink);font:16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.02em;line-height:1.08}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:2px;border-radius:8px}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+.logo{display:flex;align-items:center;gap:10px;font:800 18px var(--display);white-space:nowrap}
+.logo svg{width:30px;height:30px}
+.logo b{color:#7a9cff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font-weight:700;font-size:15px;padding:13px 20px;border-radius:999px;text-decoration:none}
+.btn:disabled{opacity:.6;cursor:default}
+.btn-main{background:linear-gradient(120deg,var(--cyan),var(--blue));color:#fff}
+.btn-glass{background:rgba(255,255,255,.07);border:1px solid var(--line);color:#fff}
+.btn-del{background:transparent;border:1px solid rgba(255,90,120,.5);color:#ffb3c1}
+.btn-del.solid{background:#e8456b;border-color:#e8456b;color:#fff}
+
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;padding-block:40px}
+.lbox{width:min(420px,100%);background:linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.16);border-radius:28px;padding:34px;backdrop-filter:blur(18px)}
+.lbox h1{font-size:28px;margin-top:26px}
+.lbox .sub{color:var(--soft);margin-top:8px}
+.f{display:grid;gap:6px;margin-top:16px}
+.f label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.f input{width:100%;background:rgba(5,8,26,.6);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px;font-size:16px}
+.f input:focus{outline:none;border-color:var(--cyan)}
+.lbox .btn{width:100%;margin-top:22px;padding:16px}
+.msg{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:14.5px;font-weight:600}
+.msg.bad{background:rgba(255,90,120,.12);border:1px solid rgba(255,90,120,.45);color:#ffc2cd}
+.msg.ok{background:rgba(70,211,154,.12);border:1px solid rgba(70,211,154,.4)}
+
+/* painel */
+.top{position:sticky;top:0;z-index:5;background:rgba(5,8,26,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px}
+.top .acts{display:flex;gap:8px;flex-wrap:wrap}
+.top .btn{padding:10px 16px;font-size:14px}
+main{padding-block:28px 60px}
+.head h1{font-size:clamp(28px,4vw,44px);font-weight:900}
+.head p{color:var(--soft);margin-top:8px}
+.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.kp div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;min-width:0}
+.kp span{display:block;font-size:13px;color:var(--soft);font-weight:600}
+.kp b{display:block;font:800 30px/1.15 var(--display);font-variant-numeric:tabular-nums;margin-top:4px}
+.kp .hl{background:linear-gradient(150deg,rgba(63,180,255,.2),var(--card));border-color:rgba(63,180,255,.45)}
+@media (max-width:760px){.kp{grid-template-columns:repeat(2,1fr)}}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:20px 0 12px}
+.bar input{flex:1 1 260px;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:16px}
+.bar input:focus{outline:none;border-color:var(--cyan)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{border:1px solid var(--line);background:transparent;color:var(--soft);font-weight:700;font-size:13.5px;padding:8px 12px;border-radius:999px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:rgba(63,180,255,.18);color:#fff;border-color:rgba(63,180,255,.6)}
+.chips em{font-style:normal;opacity:.7;margin-left:4px}
+.grid{display:grid;grid-template-columns:1fr 380px;gap:14px;align-items:start}
+.grid>*{min-width:0}
+@media (max-width:1000px){.grid{grid-template-columns:1fr}}
+.list{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:700px}
+th{text-align:left;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:700;padding:12px 14px;border-bottom:1px solid var(--line)}
+td{padding:13px 14px;border-bottom:1px solid rgba(160,185,255,.08);white-space:nowrap;font-variant-numeric:tabular-nums}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+tbody tr.sel{background:rgba(63,180,255,.1)}
+td small{display:block;color:var(--dim);font-size:12.5px}
+td.ck,th.ck{width:44px;padding-right:0}
+input[type=checkbox]{width:18px;height:18px;accent-color:#3fb4ff;cursor:pointer}
+.plate{font:800 12.5px var(--display);letter-spacing:.08em;padding:3px 7px;border-radius:5px;background:#fff;color:#10152a;border-top:3px solid #1f4fbf}
+.stt{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid transparent}
+.stt::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.s-novo{color:#7fd0ff;background:rgba(63,180,255,.14)}
+.s-contato{color:#c3a6ff;background:rgba(150,110,255,.14)}
+.s-enviada{color:#ffcf7a;background:rgba(255,190,80,.13)}
+.s-fechado{color:#6fe3b0;background:rgba(70,211,154,.13)}
+.s-perdido{color:#9aa3bd;background:rgba(154,163,189,.12)}
+.empty{padding:28px;color:var(--soft);text-align:center}
+.bulk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;padding:12px 14px;border-radius:14px;background:rgba(63,180,255,.12);border:1px solid rgba(63,180,255,.45)}
+.bulk b{margin-right:auto}
+.bulk.danger{background:rgba(255,90,120,.12);border-color:rgba(255,90,120,.5)}
+.bulk .btn{padding:9px 14px;font-size:14px}
+.det{position:sticky;top:84px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}
+.det h3{font-size:21px}
+.det .when{color:var(--dim);font-size:13px;margin-top:4px}
+.det dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:16px 0;font-size:14.5px}
+.det dt{color:var(--dim);font-weight:600}
+.det dd{margin:0;font-weight:600;word-break:break-word}
+.det h4{font:700 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:18px 0 8px}
+.sbt{display:flex;flex-wrap:wrap;gap:6px}
+.sbt button{cursor:pointer}
+.sbt button[aria-pressed="true"]{border-color:currentColor}
+.det textarea,.det input.val{width:100%;background:rgba(5,8,26,.6);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:15px}
+.det textarea{min-height:96px;resize:vertical}
+.det .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.det .row .btn{padding:10px 16px;font-size:14px}
+.det .save{width:100%;margin-top:12px}
+.note{font-size:13px;color:var(--ok);margin-top:8px;min-height:1.2em}
+.conf{margin-top:12px;padding:14px;border-radius:14px;background:rgba(255,90,120,.1);border:1px solid rgba(255,90,120,.45);display:grid;gap:10px}
+.wa{color:var(--glow);font-weight:700;text-decoration:none}
+</style>
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/icones/favicon.svg"><link rel="apple-touch-icon" href="/icones/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#05081a"></head>
+<body>
+
+<section class="login" id="v-login">
+  <form class="lbox" id="f-login" novalidate>
+    <div class="logo"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 15 L15 24 L34 5" fill="none" stroke="#3fb4ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="31" width="34" height="6" rx="3" fill="#4f7cf3"/></svg><span>TÁS <b>SEGURO</b></span></div>
+    <h1>Área do corretor</h1>
+    <p class="sub">Entre para ver as cotações recebidas pelo site.</p>
+    <div class="f"><label for="email">E-mail</label><input id="email" type="email" autocomplete="username" required></div>
+    <div class="f"><label for="senha">Senha</label><input id="senha" type="password" autocomplete="current-password" required></div>
+    <button class="btn btn-main" type="submit" id="b-login">Entrar</button>
+    <p class="msg bad" id="m-login" hidden></p>
+  </form>
+</section>
+
+<div id="v-app" hidden>
+  <header class="top"><div class="wrap">
+    <div class="logo"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 15 L15 24 L34 5" fill="none" stroke="#3fb4ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="31" width="34" height="6" rx="3" fill="#4f7cf3"/></svg><span>TÁS <b>SEGURO</b></span></div>
+    <div class="acts">
+      <button class="btn btn-glass" type="button" id="b-reload">Atualizar</button>
+      <button class="btn btn-glass" type="button" id="b-csv">Exportar planilha</button>
+      <button class="btn btn-glass" type="button" id="b-sair">Sair</button>
+    </div>
+  </div></header>
+  <main class="wrap">
+    <div class="head"><h1>Cotações recebidas</h1><p>Todo mundo que pediu cotação pelo site, com os dados completos.</p></div>
+    <div class="kp">
+      <div><span>Cotações</span><b id="k-tot">0</b></div>
+      <div><span>Novas, sem contato</span><b id="k-new">0</b></div>
+      <div><span>Em andamento</span><b id="k-and">0</b></div>
+      <div class="hl"><span>Fechadas</span><b id="k-fec">0</b></div>
+    </div>
+    <div class="bar">
+      <input id="q" type="search" placeholder="Buscar por nome, telefone, placa ou modelo" aria-label="Buscar cotação">
+      <div class="chips" id="chips" role="group" aria-label="Filtrar por status"></div>
+    </div>
+    <div class="bulk" id="bulk" hidden></div>
+    <div class="grid">
+      <div class="list">
+        <div class="tw"><table>
+          <thead><tr><th class="ck"><input type="checkbox" id="all" aria-label="Selecionar todas"></th><th>Data</th><th>Cliente</th><th>Seguro</th><th>Veículo</th><th>Placa</th><th>Status</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table></div>
+        <p class="empty" id="empty">Carregando cotações…</p>
+      </div>
+      <aside class="det" id="det"><p style="color:var(--soft)">Selecione uma cotação para ver os dados completos.</p></aside>
+    </div>
+  </main>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const STATUS = [['novo','Nova'],['contato','Em contato'],['enviada','Cotação enviada'],['fechado','Fechada'],['perdido','Perdida']];
+const SL = Object.fromEntries(STATUS);
+let token = null, itens = [], filtro = 'todos', busca = '', sel = null, marc = new Set(), confBulk = false, confDet = false;
+try { token = sessionStorage.getItem('tas-admin'); } catch (e) {}
+
+async function chamar(acao, extra = {}) {
+  const r = await fetch('/api/admin', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ acao, token, ...extra }) });
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 401 && acao !== 'login') { sair(); throw new Error('sessao'); }
+  if (!r.ok) throw new Error(j.erro || 'erro');
+  return j;
+}
+function sair() { token = null; try { sessionStorage.removeItem('tas-admin'); } catch (e) {} $('v-app').hidden = true; $('v-login').hidden = false; }
+
+$('f-login').addEventListener('submit', async e => {
+  e.preventDefault();
+  const m = $('m-login'), b = $('b-login');
+  m.hidden = true; b.disabled = true; b.textContent = 'Entrando…';
+  try {
+    const j = await chamar('login', { email: $('email').value, senha: $('senha').value });
+    token = j.token; try { sessionStorage.setItem('tas-admin', token); } catch (e) {}
+    $('senha').value = ''; abrir();
+  } catch (x) {
+    m.textContent = x.message === 'login' ? 'E-mail ou senha incorretos.' : x.message === 'config' ? 'A área do corretor ainda não foi configurada no Netlify (variáveis ADMIN_EMAIL, ADMIN_SENHA e NETLIFY_TOKEN).' : 'Não foi possível entrar agora. Tente de novo.';
+    m.hidden = false;
+  }
+  b.disabled = false; b.textContent = 'Entrar';
+});
+$('b-sair').addEventListener('click', sair);
+$('b-reload').addEventListener('click', carregar);
+
+function abrir() { $('v-login').hidden = true; $('v-app').hidden = false; carregar(); }
+async function carregar() {
+  $('empty').hidden = false; $('empty').textContent = 'Carregando cotações…';
+  try { const j = await chamar('listar'); itens = j.itens || []; render(); }
+  catch (x) { if (x.message !== 'sessao') { $('empty').hidden = false; $('empty').textContent = 'Não foi possível carregar as cotações. Confira o NETLIFY_TOKEN nas variáveis do Netlify.'; } }
+}
+
+const tel = t => { let d = String(t || '').replace(/\D/g, ''); if (d.startsWith('55') && d.length > 11) d = d.slice(2); return d.length === 11 ? `(${d.slice(0,2)}) ${d.slice(2,3)} ${d.slice(3,7)}-${d.slice(7)}` : d.length === 10 ? `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}` : (t || ''); };
+const telD = t => { let d = String(t || '').replace(/\D/g, ''); if (d.startsWith('55') && d.length > 11) d = d.slice(2); return d; };
+const dt = iso => { const d = new Date(iso); return isNaN(d) ? { d: '', h: '' } : { d: d.toLocaleDateString('pt-BR'), h: d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) }; };
+const linha = i => ({ ...i, st: i.status || 'novo', arq: !!i.arquivado, nome: i.dados.nome || '', fone: i.dados.tel || '', email: i.dados.email || '', modelo: i.dados.modelo || '', ano: i.dados.ano || '', placa: (i.dados.placa || '').toUpperCase(), uso: i.dados.uso || '', tipo: i.dados.tipo || '', detalhes: i.dados.detalhes || '', fipe: i.dados.fipe || '', cep: i.dados.cep || '', idade: i.dados.idade || '' });
+
+function render() {
+  const all = itens.map(linha).sort((a, b) => String(b.criado).localeCompare(String(a.criado)));
+  const at = all.filter(r => !r.arq), arq = all.filter(r => r.arq);
+  const n = s => at.filter(r => r.st === s).length;
+  $('k-tot').textContent = at.length; $('k-new').textContent = n('novo'); $('k-and').textContent = n('contato') + n('enviada'); $('k-fec').textContent = n('fechado');
+  $('chips').innerHTML = [['todos','Todas',at.length], ...STATUS.map(([k,l]) => [k,l,n(k)]), ['arq','Arquivadas',arq.length]].map(([k,l,c]) => `<button type="button" data-f="${k}" aria-pressed="${filtro===k}">${l}<em>${c}</em></button>`).join('');
+  const q = busca.toLowerCase();
+  const vis = (filtro === 'arq' ? arq : at).filter(r => (filtro === 'todos' || filtro === 'arq' || r.st === filtro) && (!q || [r.nome, r.fone, r.placa, r.modelo, r.email].join(' ').toLowerCase().includes(q)));
+  window.__vis = vis; window.__all = all;
+  $('rows').innerHTML = vis.map(r => { const t = dt(r.criado); return `<tr data-id="${esc(r.id)}" class="${r.id===sel?'sel':''}"><td class="ck"><input type="checkbox" data-ck="${esc(r.id)}" aria-label="Selecionar ${esc(r.nome)}" ${marc.has(r.id)?'checked':''}></td><td>${t.d}<small>${t.h}</small></td><td><b>${esc(r.nome)}</b><small>${esc(tel(r.fone))}</small></td><td>${esc(r.tipo || '—')}</td><td>${esc(r.modelo)}<small>${esc(r.ano)}${r.uso ? ' · ' + esc(r.uso) : ''}</small></td><td>${r.placa ? `<span class="plate">${esc(r.placa)}</span>` : '<small>—</small>'}</td><td><span class="stt s-${r.st}">${SL[r.st] || 'Nova'}</span></td></tr>`; }).join('');
+  const vm = vis.filter(r => marc.has(r.id)).length; $('all').checked = vis.length > 0 && vm === vis.length; $('all').indeterminate = vm > 0 && vm < vis.length;
+  $('empty').hidden = vis.length > 0;
+  $('empty').textContent = all.length ? 'Nenhuma cotação com esse filtro.' : 'Nenhuma cotação ainda. Assim que alguém enviar o formulário do site, ela aparece aqui.';
+  renderBulk(); renderDet();
+}
+function renderBulk() {
+  const b = $('bulk'), s = (window.__all || []).filter(r => marc.has(r.id));
+  if (!s.length) { b.hidden = true; confBulk = false; return; }
+  b.hidden = false; b.classList.toggle('danger', confBulk);
+  const t = s.length === 1 ? '1 cotação' : `${s.length} cotações`;
+  b.innerHTML = confBulk
+    ? `<b>Excluir ${t} de vez? Isso não pode ser desfeito.</b><button type="button" class="btn btn-del solid" data-b="del-ok">Sim, excluir</button><button type="button" class="btn btn-glass" data-b="no">Cancelar</button>`
+    : `<b>${t} selecionada${s.length > 1 ? 's' : ''}</b><button type="button" class="btn btn-glass" data-b="arq">${filtro === 'arq' ? 'Desarquivar' : 'Arquivar'}</button><button type="button" class="btn btn-del" data-b="del">Excluir</button><button type="button" class="btn btn-glass" data-b="clr">Limpar seleção</button>`;
+}
+function renderDet() {
+  const r = (window.__all || []).find(x => x.id === sel), d = $('det');
+  if (!r) { d.innerHTML = '<p style="color:var(--soft)">Selecione uma cotação para ver os dados completos.</p>'; return; }
+  if (d.dataset.id === r.id && d.contains(document.activeElement) && /TEXTAREA|INPUT/.test(document.activeElement.tagName)) return;
+  d.dataset.id = r.id; const t = dt(r.criado), dg = telD(r.fone);
+  d.innerHTML = `<h3>${esc(r.nome)}</h3><p class="when">Pediu em ${t.d} às ${t.h} · nº ${esc(r.numero || '')}</p>
+    <dl><dt>Telefone</dt><dd>${esc(tel(r.fone))}${dg ? ` · <a class="wa" href="https://wa.me/55${dg}" target="_blank" rel="noopener">WhatsApp</a>` : ''}</dd>
+    <dt>E-mail</dt><dd>${esc(r.email) || '—'}</dd><dt>Seguro</dt><dd>${esc(r.tipo) || '—'}</dd>${r.detalhes ? `<dt>Detalhes</dt><dd>${esc(r.detalhes)}</dd>` : ''}<dt>Veículo</dt><dd>${esc(r.modelo)} ${r.ano ? '(' + esc(r.ano) + ')' : ''}</dd>
+    <dt>Placa</dt><dd>${r.placa ? `<span class="plate">${esc(r.placa)}</span>` : '—'}</dd><dt>Uso</dt><dd>${esc(r.uso) || '—'}</dd><dt>Valor FIPE</dt><dd>${esc(r.fipe) || '—'}</dd><dt>CEP</dt><dd>${esc(r.cep) || '—'}</dd><dt>Idade</dt><dd>${esc(r.idade) || '—'}</dd></dl>
+    <h4>Status</h4><div class="sbt">${STATUS.map(([k,l]) => `<button type="button" class="stt s-${k}" data-s="${k}" aria-pressed="${r.st===k}">${l}</button>`).join('')}</div>
+    <h4>Valor da apólice fechada (R$)</h4><input class="val" id="d-val" inputmode="decimal" placeholder="Ex.: 1.850,00" value="${esc(r.valor)}">
+    <h4>Anotações</h4><textarea id="d-nota" placeholder="Ex.: ligou dia 05, quer franquia reduzida">${esc(r.nota)}</textarea>
+    <button type="button" class="btn btn-main save" id="d-save">Salvar anotações</button><p class="note" id="d-ok"></p>
+    <div class="row"><button type="button" class="btn btn-glass" id="d-arq">${r.arq ? 'Desarquivar' : 'Arquivar'}</button><button type="button" class="btn btn-del" id="d-del">Excluir cotação</button></div>
+    ${confDet ? `<div class="conf"><b>Excluir a cotação de ${esc(r.nome)} de vez? Isso não pode ser desfeito.</b><div class="row" style="margin:0"><button type="button" class="btn btn-del solid" id="d-del-ok">Sim, excluir</button><button type="button" class="btn btn-glass" id="d-del-no">Cancelar</button></div></div>` : ''}`;
+}
+async function salvar(r, patch) {
+  const novo = { status: r.st, nota: r.nota || '', valor: r.valor || '', arquivado: r.arq, ...patch };
+  const it = itens.find(x => x.id === r.id); Object.assign(it, novo); $('det').dataset.id = ''; render();
+  try { await chamar('salvar', { id: r.id, ...novo }); if ($('d-ok')) $('d-ok').textContent = 'Salvo.'; }
+  catch (x) { if ($('d-ok')) { $('d-ok').style.color = 'var(--bad)'; $('d-ok').textContent = 'Não foi possível salvar. Tente de novo.'; } }
+}
+async function excluir(ids) {
+  try { await chamar('excluir', { ids }); itens = itens.filter(x => !ids.includes(x.id)); ids.forEach(i => marc.delete(i)); if (ids.includes(sel)) sel = null; }
+  catch (x) { alertar('Não foi possível excluir agora. Tente de novo.'); }
+  confBulk = false; confDet = false; $('det').dataset.id = ''; render();
+}
+function alertar(t) { $('empty').hidden = false; $('empty').textContent = t; }
+
+document.addEventListener('change', e => {
+  if (e.target.id === 'all') { (window.__vis || []).forEach(r => e.target.checked ? marc.add(r.id) : marc.delete(r.id)); confBulk = false; render(); return; }
+  if (e.target.dataset && e.target.dataset.ck) { e.target.checked ? marc.add(e.target.dataset.ck) : marc.delete(e.target.dataset.ck); confBulk = false; render(); }
+});
+document.addEventListener('click', e => {
+  if (e.target.closest('td.ck,th.ck')) return;
+  const bb = e.target.closest('[data-b]');
+  if (bb) {
+    const ids = [...marc], all = window.__all || [];
+    if (bb.dataset.b === 'arq') { const v = filtro !== 'arq'; ids.forEach(id => { const r = all.find(x => x.id === id); if (r) salvar(r, { arquivado: v }); }); marc.clear(); render(); }
+    if (bb.dataset.b === 'del') { confBulk = true; renderBulk(); }
+    if (bb.dataset.b === 'del-ok') excluir(ids);
+    if (bb.dataset.b === 'no') { confBulk = false; renderBulk(); }
+    if (bb.dataset.b === 'clr') { marc.clear(); render(); }
+    return;
+  }
+  const tr = e.target.closest('tbody tr'); if (tr) { sel = tr.dataset.id; confDet = false; $('det').dataset.id = ''; render(); if (innerWidth < 1000) $('det').scrollIntoView({ behavior: 'smooth' }); return; }
+  const f = e.target.closest('[data-f]'); if (f) { filtro = f.dataset.f; marc.clear(); render(); return; }
+  const r = (window.__all || []).find(x => x.id === sel); if (!r) return;
+  const sb = e.target.closest('[data-s]'); if (sb) { salvar(r, { status: sb.dataset.s }); return; }
+  if (e.target.id === 'd-save') salvar(r, { nota: $('d-nota').value, valor: $('d-val').value });
+  if (e.target.id === 'd-arq') salvar(r, { arquivado: !r.arq });
+  if (e.target.id === 'd-del') { confDet = true; $('det').dataset.id = ''; renderDet(); }
+  if (e.target.id === 'd-del-no') { confDet = false; $('det').dataset.id = ''; renderDet(); }
+  if (e.target.id === 'd-del-ok') excluir([r.id]);
+});
+$('q').addEventListener('input', e => { busca = e.target.value; render(); });
+$('b-csv').addEventListener('click', () => {
+  const head = ['Data','Hora','Nome','Telefone','E-mail','Seguro','Modelo','Ano','Placa','Uso','Valor FIPE','CEP','Idade','Status','Arquivada','Valor fechado','Anotações'];
+  const c = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const rows = (window.__all || []).map(r => { const t = dt(r.criado); return [t.d, t.h, r.nome, tel(r.fone), r.email, r.tipo, r.modelo, r.ano, r.placa, r.uso, r.fipe, r.cep, r.idade, SL[r.st] || 'Nova', r.arq ? 'Sim' : 'Não', r.valor, r.nota].map(c).join(';'); });
+  const blob = new Blob(['﻿' + [head.map(c).join(';'), ...rows].join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `cotacoes-tas-seguro-${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(a); a.click(); a.remove();
+});
+if (token) abrir();
+</script>
+</body>
+</html>
