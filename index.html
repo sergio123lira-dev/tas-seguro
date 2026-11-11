@@ -1383,13 +1383,17 @@ addEventListener('scroll', updBar, {passive:true}); updBar();
 .tas-wa{background:#e9f9ef;color:#0b7a43}
 .tas-card .tas-x{top:10px;right:10px;background:rgba(255,255,255,.9)}
 .tas-card{position:relative}
+.tas-media{position:relative}
+.tas-som{position:absolute;inset:auto 10px 10px 10px;display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:10px 12px;background:rgba(13,21,48,.78);color:#fff;font:700 14.5px var(--body);cursor:pointer;animation:tasPulse 1.6s ease-in-out infinite}
+@keyframes tasPulse{50%{transform:scale(1.03)}}
+@media (prefers-reduced-motion:reduce){.tas-som{animation:none}}
 @media (max-width:600px){.tas{right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px))}.tas-av{width:72px;height:72px}.tas-bal{font-size:14px;max-width:200px}}
 @media (prefers-reduced-motion:reduce){.tas-bal,.tas-av{transition:none}}
 </style>
 <div class="tas" id="tas">
   <div class="tas-card" id="tas-card" hidden role="dialog" aria-label="Tás, da Tás Seguro">
     <button type="button" class="tas-x" id="tas-card-x" aria-label="Fechar">&times;</button>
-    <video id="tas-fala" poster="/icones/tas-capa.jpg" src="https://cms-toolkit-artifacts.artlist.io/content/-m-u-l-t-i_-t-o_-v-i-d-e-o-v1/media__8/-m-u-l-t-i_-t-o_-v-i-d-e-o-f681e78a-8f17-43a5-85a5-3c850be46f86.mp4?Expires=2109762868&Key-Pair-Id=K2ZDLYDZI2R1DF&Signature=eF5PtUfTxI8n4X5dU1QLTN2DZzhgpux4QNBxq0O4Ijc0QW1kdltL6csyVbxUAEfU8B3Y3qoTF2WDg~IkwufflR8w7j~9rEoMIO2fgqPtEq19g-4~-2BM4nXJTMPa1saDHRlDYWBwYXTkJ0l3QhuJnbcGAQyk8Zqh~NQSwq8vAyFC0Y6pB89WEYHymVc4xglOJsLobfD4gQqssRP80~C-J91D9zljqIL9zdk4IJsuOqbEEiQP9O4dik6RiXlyZkUyR3MV51~Z2zFwRMLIY11ykHA-Xrz0pxJtidwcjnFPRdW4EqCiLxzSGM92m2CwgdGFhgyl9Qee4FD2d6OBw714Ng__" playsinline preload="none"></video>
+    <div class="tas-media"><video id="tas-fala" poster="/icones/tas-capa.jpg" src="https://cms-toolkit-artifacts.artlist.io/content/-m-u-l-t-i_-t-o_-v-i-d-e-o-v1/media__8/-m-u-l-t-i_-t-o_-v-i-d-e-o-f681e78a-8f17-43a5-85a5-3c850be46f86.mp4?Expires=2109762868&Key-Pair-Id=K2ZDLYDZI2R1DF&Signature=eF5PtUfTxI8n4X5dU1QLTN2DZzhgpux4QNBxq0O4Ijc0QW1kdltL6csyVbxUAEfU8B3Y3qoTF2WDg~IkwufflR8w7j~9rEoMIO2fgqPtEq19g-4~-2BM4nXJTMPa1saDHRlDYWBwYXTkJ0l3QhuJnbcGAQyk8Zqh~NQSwq8vAyFC0Y6pB89WEYHymVc4xglOJsLobfD4gQqssRP80~C-J91D9zljqIL9zdk4IJsuOqbEEiQP9O4dik6RiXlyZkUyR3MV51~Z2zFwRMLIY11ykHA-Xrz0pxJtidwcjnFPRdW4EqCiLxzSGM92m2CwgdGFhgyl9Qee4FD2d6OBw714Ng__" playsinline preload="auto"></video><button type="button" class="tas-som" id="tas-som" hidden>🔊 Toque para ouvir o Tás</button></div>
     <div class="tas-card-b">
       <p><b>Oi, eu sou o Tás!</b> Cotação grátis, em várias seguradoras, sem papelada.</p>
       <div class="tas-acts"><a class="tas-go" href="#cotar" id="tas-go">Fazer cotação</a><a class="tas-wa" id="tas-wa" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a></div>
@@ -1414,13 +1418,26 @@ addEventListener('scroll', updBar, {passive:true}); updBar();
   const semVideo = v => { v.style.visibility = 'hidden'; };
   loop.addEventListener('error', () => semVideo(loop));
   if (reduz) { loop.removeAttribute('autoplay'); loop.pause(); } else loop.play().catch(() => {});
-  if (!fechou) setTimeout(() => { if (card.hidden) bal.classList.add('on'); }, 2500);
+  const som = $('tas-som');
+  function previa() {
+    if (!card.hidden) return;
+    card.hidden = false; loop.pause();
+    fala.muted = true; fala.loop = true; som.hidden = false;
+    fala.currentTime = 0; fala.play().catch(() => {});
+  }
+  som.addEventListener('click', () => {
+    som.hidden = true; fala.loop = false; fala.muted = false;
+    fala.currentTime = 0; fala.play().catch(() => {});
+  });
+  if (!fechou) setTimeout(previa, 3000);
   function abrir() {
     bal.classList.remove('on'); card.hidden = false; loop.pause();
+    $('tas-som').hidden = true; fala.loop = false; fala.muted = false;
     fala.currentTime = 0; fala.play().catch(() => {});
   }
   function fechar() {
     card.hidden = true; fala.pause();
+    try { sessionStorage.setItem('tasBal', '0'); } catch (e) {}
     if (!reduz) loop.play().catch(() => {});
   }
   av.addEventListener('click', () => card.hidden ? abrir() : fechar());
