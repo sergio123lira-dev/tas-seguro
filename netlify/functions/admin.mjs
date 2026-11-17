@@ -110,17 +110,6 @@ export default async (req, context) => {
       return resposta({ ok: true });
     }
 
-    if (acao === "excluir") {
-      const ids = [].concat(corpo.ids || corpo.id || []).map(String).filter(Boolean);
-      const meta = await lerMeta();
-      for (const id of ids) {
-        await api(`/submissions/${encodeURIComponent(id)}`, { method: "DELETE" });
-        delete meta[id];
-      }
-      await store.setJSON("meta", meta);
-      return resposta({ ok: true, excluidos: ids.length });
-    }
-
     if (acao === "clientes_listar") {
       return resposta({ clientes: await lerClientes() });
     }
