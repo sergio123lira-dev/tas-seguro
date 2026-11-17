@@ -149,13 +149,6 @@ export default async (req, context) => {
       await clientes.setJSON("lista", lista);
       return resposta({ ok: true, id });
     }
-
-    if (acao === "cliente_excluir") {
-      const id = String(corpo.id || "");
-      const lista = (await lerClientes()).filter((x) => x.id !== id);
-      await clientes.setJSON("lista", lista);
-      return resposta({ ok: true });
-    }
   } catch (e) {
     return resposta({ erro: "netlify", detalhe: String(e.message || e) }, 502);
   }

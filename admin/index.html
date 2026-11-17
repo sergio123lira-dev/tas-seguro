@@ -320,7 +320,7 @@ $('b-csv').addEventListener('click', () => {
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `cotacoes-tas-seguro-${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(a); a.click(); a.remove();
 });
 /* ---------- Clientes ---------- */
-let view = 'cot', clientes = [], cSel = null, cNovo = false, cConf = false, fSeguro = '';
+let view = 'cot', clientes = [], cSel = null, cNovo = false, fSeguro = '';
 const SEGUROS = ['Auto','Moto','Vida','Residencial','Empresarial','Viagem','Celular','Frotas','Saúde e odonto','Fiança de aluguel','Caminhão e carga','Outro'];
 const CAMPOS = [['nome','Nome','text'],['tel','Telefone','tel'],['email','E-mail','email'],['seguro','Seguro','text'],['veiculo','Veículo','text'],['placa','Placa','text'],['valor','Valor fechado (R$)','text']];
 const ERROS = { nome: 'Informe pelo menos o nome do cliente.', netlify: 'Não foi possível falar com o servidor. Tente de novo.' };
@@ -363,33 +363,17 @@ function renderCDet() {
       <button type="submit" class="btn btn-main save" id="c-salvar">Salvar cliente</button>
       <p class="note" id="c-ok"></p>
     </form>
-    ${!cNovo ? `<div class="row"><button type="button" class="btn btn-del" id="c-excluir">Excluir cliente</button></div>` : ''}
-    ${cConf ? `<div class="conf"><b>Excluir ${esc(c.nome)} de vez? Isso não pode ser desfeito.</b><div class="row" style="margin:0"><button type="button" class="btn btn-del solid" id="c-excluir-ok">Sim, excluir</button><button type="button" class="btn btn-glass" id="c-excluir-no">Cancelar</button></div></div>` : ''}`;
+`;
 }
-async function excluirCliente(id) {
-  try {
-    await chamar('cliente_excluir', { id });
-    clientes = clientes.filter(c => c.id !== id); cSel = null; cConf = false; cNovo = false;
-    renderClientes();
-  } catch (x) {
-    if (x.message === 'sessao') return;
-    cConf = false; renderCDet();
-    $('c-empty').hidden = false; $('c-empty').textContent = 'Não foi possível excluir agora. Tente de novo.';
-  }
-}
-
 document.addEventListener('click', e => {
   const t = e.target.closest('#t-cot,#t-cli');
   if (t) { trocarAba(t.id === 't-cli' ? 'cli' : 'cot'); return; }
   if (!e.target.closest('#view-cli')) return;
   const sf = e.target.closest('[data-sf]');
   if (sf) { fSeguro = sf.dataset.sf; renderClientes(); return; }
-  if (e.target.closest('#c-novo')) { cNovo = true; cSel = null; cConf = false; renderClientes(); return; }
+  if (e.target.closest('#c-novo')) { cNovo = true; cSel = null; renderClientes(); return; }
   const tr = e.target.closest('#c-rows tr');
-  if (tr) { cSel = tr.dataset.cid; cNovo = false; cConf = false; renderClientes(); return; }
-  if (e.target.closest('#c-excluir')) { cConf = true; renderCDet(); return; }
-  if (e.target.closest('#c-excluir-no')) { cConf = false; renderCDet(); return; }
-  if (e.target.closest('#c-excluir-ok')) { excluirCliente(cSel); return; }
+  if (tr) { cSel = tr.dataset.cid; cNovo = false; renderClientes(); return; }
 });
 document.addEventListener('submit', async e => {
   if (e.target.id !== 'c-form') return;
