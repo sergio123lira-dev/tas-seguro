@@ -173,6 +173,7 @@ input[type=checkbox]{width:18px;height:18px;accent-color:#3fb4ff;cursor:pointer}
       <div class="grid" style="margin-top:20px">
         <div class="list">
           <div class="bar" style="margin:0;padding:14px"><input id="cq" type="search" placeholder="Buscar cliente por nome, telefone, placa ou veículo" aria-label="Buscar cliente"><button class="btn btn-main" type="button" id="c-novo">Novo cliente</button></div>
+          <div class="chips" id="c-chips" style="padding:0 14px 12px"></div>
           <div class="tw"><table>
             <thead><tr><th>Nome</th><th>Telefone</th><th>Seguro</th><th>Veículo</th><th>Status</th></tr></thead>
             <tbody id="c-rows"></tbody>
@@ -319,7 +320,8 @@ $('b-csv').addEventListener('click', () => {
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `cotacoes-tas-seguro-${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(a); a.click(); a.remove();
 });
 /* ---------- Clientes ---------- */
-let view = 'cot', clientes = [], cSel = null, cNovo = false, cConf = false;
+let view = 'cot', clientes = [], cSel = null, cNovo = false, cConf = false, fSeguro = '';
+const SEGUROS = ['Auto','Moto','Vida','Residencial','Empresarial','Viagem','Celular','Frotas','Saúde e odonto','Fiança de aluguel','Caminhão e carga','Outro'];
 const CAMPOS = [['nome','Nome','text'],['tel','Telefone','tel'],['email','E-mail','email'],['seguro','Seguro','text'],['veiculo','Veículo','text'],['placa','Placa','text'],['valor','Valor fechado (R$)','text']];
 const ERROS = { nome: 'Informe pelo menos o nome do cliente.', netlify: 'Não foi possível falar com o servidor. Tente de novo.' };
 
@@ -335,7 +337,11 @@ async function carregarClientes() {
 }
 function renderClientes() {
   const q = $('cq').value.toLowerCase();
+  const usados = [...new Set(clientes.map(c => c.seguro).filter(Boolean))];
+  $('c-chips').innerHTML = [['', 'Todos'], ...usados.map(s => [s, s])]
+    .map(([k, l]) => `<button type="button" data-sf="${esc(k)}" aria-pressed="${fSeguro === k}">${esc(l)}</button>`).join('');
   const vis = clientes
+    .filter(c => !fSeguro || c.seguro === fSeguro)
     .filter(c => !q || [c.nome, c.tel, c.placa, c.veiculo].join(' ').toLowerCase().includes(q))
     .sort((a, b) => String(a.nome).localeCompare(String(b.nome), 'pt-BR'));
   $('c-rows').innerHTML = vis.map(c => `<tr data-cid="${esc(c.id)}" class="${c.id === cSel ? 'sel' : ''}"><td><b>${esc(c.nome)}</b></td><td>${esc(tel(c.tel))}</td><td>${esc(c.seguro || '—')}</td><td>${esc(c.veiculo || '—')}${c.placa ? ` <span class="plate">${esc(c.placa)}</span>` : ''}</td><td><span class="stt s-${esc(c.status)}">${SL[c.status] || 'Nova'}</span></td></tr>`).join('');
@@ -349,7 +355,9 @@ function renderCDet() {
   if (!c) { d.innerHTML = '<p style="color:var(--soft)">Escolha um cliente na lista ou clique em "Novo cliente".</p>'; return; }
   d.innerHTML = `<h3>${cNovo ? 'Novo cliente' : esc(c.nome)}</h3>
     <form id="c-form" novalidate style="margin-top:12px">
-      ${CAMPOS.map(([k, l, t]) => `<div class="f"><label for="cf-${k}">${l}</label><input id="cf-${k}" type="${t}" value="${esc(c[k])}"></div>`).join('')}
+      ${CAMPOS.map(([k, l, t]) => k === 'seguro'
+        ? `<div class="f"><label for="cf-seguro">Seguro de interesse</label><select id="cf-seguro"><option value="">Escolha o seguro</option>${SEGUROS.map(s => `<option value="${esc(s)}" ${c.seguro === s ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select></div>`
+        : `<div class="f"><label for="cf-${k}">${l}</label><input id="cf-${k}" type="${t}" value="${esc(c[k])}"></div>`).join('')}
       <div class="f"><label for="cf-status">Status</label><select id="cf-status">${STATUS.map(([k, l]) => `<option value="${k}" ${(c.status || 'novo') === k ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
       <div class="f"><label for="cf-nota">Anotações</label><textarea id="cf-nota" placeholder="Ex.: prefere contato à tarde, renovação em março">${esc(c.nota)}</textarea></div>
       <button type="submit" class="btn btn-main save" id="c-salvar">Salvar cliente</button>
@@ -374,6 +382,8 @@ document.addEventListener('click', e => {
   const t = e.target.closest('#t-cot,#t-cli');
   if (t) { trocarAba(t.id === 't-cli' ? 'cli' : 'cot'); return; }
   if (!e.target.closest('#view-cli')) return;
+  const sf = e.target.closest('[data-sf]');
+  if (sf) { fSeguro = sf.dataset.sf; renderClientes(); return; }
   if (e.target.closest('#c-novo')) { cNovo = true; cSel = null; cConf = false; renderClientes(); return; }
   const tr = e.target.closest('#c-rows tr');
   if (tr) { cSel = tr.dataset.cid; cNovo = false; cConf = false; renderClientes(); return; }
