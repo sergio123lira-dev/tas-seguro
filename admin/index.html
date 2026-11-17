@@ -112,6 +112,11 @@ input[type=checkbox]{width:18px;height:18px;accent-color:#3fb4ff;cursor:pointer}
 .note{font-size:13px;color:var(--ok);margin-top:8px;min-height:1.2em}
 .conf{margin-top:12px;padding:14px;border-radius:14px;background:rgba(255,90,120,.1);border:1px solid rgba(255,90,120,.45);display:grid;gap:10px}
 .wa{color:var(--glow);font-weight:700;text-decoration:none}
+.tabs{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:transparent;color:var(--soft);font-weight:700;font-size:15px;padding:10px 18px;border-radius:999px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:rgba(63,180,255,.18);color:#fff;border-color:rgba(63,180,255,.6)}
+.det select{width:100%;background:rgba(5,8,26,.6);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:15px}
+.det .f{margin-top:12px}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/icones/favicon.svg"><link rel="apple-touch-icon" href="/icones/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><meta name="theme-color" content="#05081a"></head>
 <body>
@@ -138,6 +143,8 @@ input[type=checkbox]{width:18px;height:18px;accent-color:#3fb4ff;cursor:pointer}
     </div>
   </div></header>
   <main class="wrap">
+    <nav class="tabs" aria-label="Seções"><button type="button" id="t-cot" aria-pressed="true">Cotações</button><button type="button" id="t-cli" aria-pressed="false">Clientes</button></nav>
+    <div id="view-cot">
     <div class="head"><h1>Cotações recebidas</h1><p>Todo mundo que pediu cotação pelo site, com os dados completos.</p></div>
     <div class="kp">
       <div><span>Cotações</span><b id="k-tot">0</b></div>
@@ -159,6 +166,21 @@ input[type=checkbox]{width:18px;height:18px;accent-color:#3fb4ff;cursor:pointer}
         <p class="empty" id="empty">Carregando cotações…</p>
       </div>
       <aside class="det" id="det"><p style="color:var(--soft)">Selecione uma cotação para ver os dados completos.</p></aside>
+    </div>
+    </div>
+    <div id="view-cli" hidden>
+      <div class="head"><h1>Clientes</h1><p>Cadastre os seus clientes. Quem entra no painel vê a mesma lista.</p></div>
+      <div class="grid" style="margin-top:20px">
+        <div class="list">
+          <div class="bar" style="margin:0;padding:14px"><input id="cq" type="search" placeholder="Buscar cliente por nome, telefone, placa ou veículo" aria-label="Buscar cliente"><button class="btn btn-main" type="button" id="c-novo">Novo cliente</button></div>
+          <div class="tw"><table>
+            <thead><tr><th>Nome</th><th>Telefone</th><th>Seguro</th><th>Veículo</th><th>Status</th></tr></thead>
+            <tbody id="c-rows"></tbody>
+          </table></div>
+          <p class="empty" id="c-empty">Nenhum cliente cadastrado ainda.</p>
+        </div>
+        <aside class="det" id="c-det"><p style="color:var(--soft)">Escolha um cliente na lista ou clique em "Novo cliente".</p></aside>
+      </div>
     </div>
   </main>
 </div>
@@ -267,7 +289,7 @@ document.addEventListener('change', e => {
   if (e.target.dataset && e.target.dataset.ck) { e.target.checked ? marc.add(e.target.dataset.ck) : marc.delete(e.target.dataset.ck); confBulk = false; render(); }
 });
 document.addEventListener('click', e => {
-  if (e.target.closest('td.ck,th.ck')) return;
+  if (e.target.closest('td.ck,th.ck,#view-cli,#t-cot,#t-cli')) return;
   const bb = e.target.closest('[data-b]');
   if (bb) {
     const ids = [...marc], all = window.__all || [];
@@ -296,6 +318,89 @@ $('b-csv').addEventListener('click', () => {
   const blob = new Blob(['﻿' + [head.map(c).join(';'), ...rows].join('\r\n')], { type: 'text/csv;charset=utf-8' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `cotacoes-tas-seguro-${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(a); a.click(); a.remove();
 });
+/* ---------- Clientes ---------- */
+let view = 'cot', clientes = [], cSel = null, cNovo = false, cConf = false;
+const CAMPOS = [['nome','Nome','text'],['tel','Telefone','tel'],['email','E-mail','email'],['seguro','Seguro','text'],['veiculo','Veículo','text'],['placa','Placa','text'],['valor','Valor fechado (R$)','text']];
+const ERROS = { nome: 'Informe pelo menos o nome do cliente.', netlify: 'Não foi possível falar com o servidor. Tente de novo.' };
+
+function trocarAba(v) {
+  view = v;
+  $('view-cot').hidden = v !== 'cot'; $('view-cli').hidden = v !== 'cli';
+  $('t-cot').setAttribute('aria-pressed', v === 'cot'); $('t-cli').setAttribute('aria-pressed', v === 'cli');
+  if (v === 'cli') carregarClientes();
+}
+async function carregarClientes() {
+  try { const j = await chamar('clientes_listar'); clientes = j.clientes || []; renderClientes(); }
+  catch (x) { if (x.message !== 'sessao') { $('c-empty').hidden = false; $('c-empty').textContent = 'Não foi possível carregar os clientes. Tente de novo.'; } }
+}
+function renderClientes() {
+  const q = $('cq').value.toLowerCase();
+  const vis = clientes
+    .filter(c => !q || [c.nome, c.tel, c.placa, c.veiculo].join(' ').toLowerCase().includes(q))
+    .sort((a, b) => String(a.nome).localeCompare(String(b.nome), 'pt-BR'));
+  $('c-rows').innerHTML = vis.map(c => `<tr data-cid="${esc(c.id)}" class="${c.id === cSel ? 'sel' : ''}"><td><b>${esc(c.nome)}</b></td><td>${esc(tel(c.tel))}</td><td>${esc(c.seguro || '—')}</td><td>${esc(c.veiculo || '—')}${c.placa ? ` <span class="plate">${esc(c.placa)}</span>` : ''}</td><td><span class="stt s-${esc(c.status)}">${SL[c.status] || 'Nova'}</span></td></tr>`).join('');
+  $('c-empty').hidden = vis.length > 0;
+  $('c-empty').textContent = clientes.length ? 'Nenhum cliente com essa busca.' : 'Nenhum cliente cadastrado ainda.';
+  renderCDet();
+}
+function renderCDet() {
+  const d = $('c-det');
+  const c = cNovo ? {} : clientes.find(x => x.id === cSel);
+  if (!c) { d.innerHTML = '<p style="color:var(--soft)">Escolha um cliente na lista ou clique em "Novo cliente".</p>'; return; }
+  d.innerHTML = `<h3>${cNovo ? 'Novo cliente' : esc(c.nome)}</h3>
+    <form id="c-form" novalidate style="margin-top:12px">
+      ${CAMPOS.map(([k, l, t]) => `<div class="f"><label for="cf-${k}">${l}</label><input id="cf-${k}" type="${t}" value="${esc(c[k])}"></div>`).join('')}
+      <div class="f"><label for="cf-status">Status</label><select id="cf-status">${STATUS.map(([k, l]) => `<option value="${k}" ${(c.status || 'novo') === k ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+      <div class="f"><label for="cf-nota">Anotações</label><textarea id="cf-nota" placeholder="Ex.: prefere contato à tarde, renovação em março">${esc(c.nota)}</textarea></div>
+      <button type="submit" class="btn btn-main save" id="c-salvar">Salvar cliente</button>
+      <p class="note" id="c-ok"></p>
+    </form>
+    ${!cNovo ? `<div class="row"><button type="button" class="btn btn-del" id="c-excluir">Excluir cliente</button></div>` : ''}
+    ${cConf ? `<div class="conf"><b>Excluir ${esc(c.nome)} de vez? Isso não pode ser desfeito.</b><div class="row" style="margin:0"><button type="button" class="btn btn-del solid" id="c-excluir-ok">Sim, excluir</button><button type="button" class="btn btn-glass" id="c-excluir-no">Cancelar</button></div></div>` : ''}`;
+}
+async function excluirCliente(id) {
+  try {
+    await chamar('cliente_excluir', { id });
+    clientes = clientes.filter(c => c.id !== id); cSel = null; cConf = false; cNovo = false;
+    renderClientes();
+  } catch (x) {
+    if (x.message === 'sessao') return;
+    cConf = false; renderCDet();
+    $('c-empty').hidden = false; $('c-empty').textContent = 'Não foi possível excluir agora. Tente de novo.';
+  }
+}
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('#t-cot,#t-cli');
+  if (t) { trocarAba(t.id === 't-cli' ? 'cli' : 'cot'); return; }
+  if (!e.target.closest('#view-cli')) return;
+  if (e.target.closest('#c-novo')) { cNovo = true; cSel = null; cConf = false; renderClientes(); return; }
+  const tr = e.target.closest('#c-rows tr');
+  if (tr) { cSel = tr.dataset.cid; cNovo = false; cConf = false; renderClientes(); return; }
+  if (e.target.closest('#c-excluir')) { cConf = true; renderCDet(); return; }
+  if (e.target.closest('#c-excluir-no')) { cConf = false; renderCDet(); return; }
+  if (e.target.closest('#c-excluir-ok')) { excluirCliente(cSel); return; }
+});
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'c-form') return;
+  e.preventDefault();
+  const cliente = { status: $('cf-status').value, nota: $('cf-nota').value };
+  if (!cNovo) cliente.id = cSel;
+  CAMPOS.forEach(([k]) => { cliente[k] = $('cf-' + k).value; });
+  const b = $('c-salvar'); b.disabled = true;
+  $('c-ok').style.color = ''; $('c-ok').textContent = 'Salvando…';
+  try {
+    const j = await chamar('cliente_salvar', { cliente });
+    cNovo = false; cSel = j.id;
+    await carregarClientes();
+    if ($('c-ok')) $('c-ok').textContent = 'Salvo.';
+  } catch (x) {
+    if (x.message !== 'sessao' && $('c-ok')) { $('c-ok').style.color = 'var(--bad)'; $('c-ok').textContent = ERROS[x.message] || 'Não foi possível salvar. Tente de novo.'; }
+    b.disabled = false;
+  }
+});
+$('cq').addEventListener('input', renderClientes);
+
 if (token) abrir();
 </script>
 </body>
