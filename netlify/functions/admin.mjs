@@ -77,6 +77,8 @@ export default async (req, context) => {
   const siteId = context?.site?.id || process.env.SITE_ID;
   const store = getStore({ name: "crm", consistency: "strong" });
   const lerMeta = async () => (await store.get("meta", { type: "json" })) || {};
+  const clientes = getStore({ name: "clientes", consistency: "strong" });
+  const lerClientes = async () => (await clientes.get("lista", { type: "json" })) || [];
 
   try {
     if (acao === "listar") {
@@ -117,6 +119,42 @@ export default async (req, context) => {
       }
       await store.setJSON("meta", meta);
       return resposta({ ok: true, excluidos: ids.length });
+    }
+
+    if (acao === "clientes_listar") {
+      return resposta({ clientes: await lerClientes() });
+    }
+
+    if (acao === "cliente_salvar") {
+      const c = corpo.cliente || {};
+      const nome = String(c.nome || "").trim().slice(0, 120);
+      if (!nome) return resposta({ erro: "nome" }, 400);
+      const lista = await lerClientes();
+      const id = String(c.id || crypto.randomUUID());
+      const dados = {
+        nome,
+        tel: String(c.tel || "").trim().slice(0, 30),
+        email: String(c.email || "").trim().slice(0, 120),
+        seguro: String(c.seguro || "").slice(0, 60),
+        veiculo: String(c.veiculo || "").trim().slice(0, 120),
+        placa: String(c.placa || "").trim().toUpperCase().slice(0, 10),
+        status: String(c.status || "novo").slice(0, 20),
+        valor: String(c.valor || "").slice(0, 40),
+        nota: String(c.nota || "").slice(0, 4000),
+        atualizado: new Date().toISOString(),
+      };
+      const i = lista.findIndex((x) => x.id === id);
+      if (i >= 0) lista[i] = { ...lista[i], ...dados, id };
+      else lista.push({ ...dados, id, criado: new Date().toISOString() });
+      await clientes.setJSON("lista", lista);
+      return resposta({ ok: true, id });
+    }
+
+    if (acao === "cliente_excluir") {
+      const id = String(corpo.id || "");
+      const lista = (await lerClientes()).filter((x) => x.id !== id);
+      await clientes.setJSON("lista", lista);
+      return resposta({ ok: true });
     }
   } catch (e) {
     return resposta({ erro: "netlify", detalhe: String(e.message || e) }, 502);
