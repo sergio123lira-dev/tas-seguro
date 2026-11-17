@@ -191,7 +191,7 @@ const $ = id => document.getElementById(id);
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const STATUS = [['novo','Nova'],['contato','Em contato'],['enviada','Cotação enviada'],['fechado','Fechada'],['perdido','Perdida']];
 const SL = Object.fromEntries(STATUS);
-let token = null, itens = [], filtro = 'todos', busca = '', sel = null, marc = new Set(), confBulk = false, confDet = false;
+let token = null, itens = [], filtro = 'todos', busca = '', sel = null, marc = new Set();
 try { token = sessionStorage.getItem('tas-admin'); } catch (e) {}
 
 async function chamar(acao, extra = {}) {
@@ -249,12 +249,10 @@ function render() {
 }
 function renderBulk() {
   const b = $('bulk'), s = (window.__all || []).filter(r => marc.has(r.id));
-  if (!s.length) { b.hidden = true; confBulk = false; return; }
-  b.hidden = false; b.classList.toggle('danger', confBulk);
+  if (!s.length) { b.hidden = true; return; }
+  b.hidden = false;
   const t = s.length === 1 ? '1 cotação' : `${s.length} cotações`;
-  b.innerHTML = confBulk
-    ? `<b>Excluir ${t} de vez? Isso não pode ser desfeito.</b><button type="button" class="btn btn-del solid" data-b="del-ok">Sim, excluir</button><button type="button" class="btn btn-glass" data-b="no">Cancelar</button>`
-    : `<b>${t} selecionada${s.length > 1 ? 's' : ''}</b><button type="button" class="btn btn-glass" data-b="arq">${filtro === 'arq' ? 'Desarquivar' : 'Arquivar'}</button><button type="button" class="btn btn-del" data-b="del">Excluir</button><button type="button" class="btn btn-glass" data-b="clr">Limpar seleção</button>`;
+  b.innerHTML = `<b>${t} selecionada${s.length > 1 ? 's' : ''}</b><button type="button" class="btn btn-glass" data-b="arq">${filtro === 'arq' ? 'Desarquivar' : 'Arquivar'}</button><button type="button" class="btn btn-glass" data-b="clr">Limpar seleção</button>`;
 }
 function renderDet() {
   const r = (window.__all || []).find(x => x.id === sel), d = $('det');
@@ -269,8 +267,7 @@ function renderDet() {
     <h4>Valor da apólice fechada (R$)</h4><input class="val" id="d-val" inputmode="decimal" placeholder="Ex.: 1.850,00" value="${esc(r.valor)}">
     <h4>Anotações</h4><textarea id="d-nota" placeholder="Ex.: ligou dia 05, quer franquia reduzida">${esc(r.nota)}</textarea>
     <button type="button" class="btn btn-main save" id="d-save">Salvar anotações</button><p class="note" id="d-ok"></p>
-    <div class="row"><button type="button" class="btn btn-glass" id="d-arq">${r.arq ? 'Desarquivar' : 'Arquivar'}</button><button type="button" class="btn btn-del" id="d-del">Excluir cotação</button></div>
-    ${confDet ? `<div class="conf"><b>Excluir a cotação de ${esc(r.nome)} de vez? Isso não pode ser desfeito.</b><div class="row" style="margin:0"><button type="button" class="btn btn-del solid" id="d-del-ok">Sim, excluir</button><button type="button" class="btn btn-glass" id="d-del-no">Cancelar</button></div></div>` : ''}`;
+    <div class="row"><button type="button" class="btn btn-glass" id="d-arq">${r.arq ? 'Desarquivar' : 'Arquivar'}</button></div>`;
 }
 async function salvar(r, patch) {
   const novo = { status: r.st, nota: r.nota || '', valor: r.valor || '', arquivado: r.arq, ...patch };
@@ -278,16 +275,10 @@ async function salvar(r, patch) {
   try { await chamar('salvar', { id: r.id, ...novo }); if ($('d-ok')) $('d-ok').textContent = 'Salvo.'; }
   catch (x) { if ($('d-ok')) { $('d-ok').style.color = 'var(--bad)'; $('d-ok').textContent = 'Não foi possível salvar. Tente de novo.'; } }
 }
-async function excluir(ids) {
-  try { await chamar('excluir', { ids }); itens = itens.filter(x => !ids.includes(x.id)); ids.forEach(i => marc.delete(i)); if (ids.includes(sel)) sel = null; }
-  catch (x) { alertar('Não foi possível excluir agora. Tente de novo.'); }
-  confBulk = false; confDet = false; $('det').dataset.id = ''; render();
-}
-function alertar(t) { $('empty').hidden = false; $('empty').textContent = t; }
 
 document.addEventListener('change', e => {
-  if (e.target.id === 'all') { (window.__vis || []).forEach(r => e.target.checked ? marc.add(r.id) : marc.delete(r.id)); confBulk = false; render(); return; }
-  if (e.target.dataset && e.target.dataset.ck) { e.target.checked ? marc.add(e.target.dataset.ck) : marc.delete(e.target.dataset.ck); confBulk = false; render(); }
+  if (e.target.id === 'all') { (window.__vis || []).forEach(r => e.target.checked ? marc.add(r.id) : marc.delete(r.id)); render(); return; }
+  if (e.target.dataset && e.target.dataset.ck) { e.target.checked ? marc.add(e.target.dataset.ck) : marc.delete(e.target.dataset.ck); render(); }
 });
 document.addEventListener('click', e => {
   if (e.target.closest('td.ck,th.ck,#view-cli,#t-cot,#t-cli')) return;
@@ -295,21 +286,15 @@ document.addEventListener('click', e => {
   if (bb) {
     const ids = [...marc], all = window.__all || [];
     if (bb.dataset.b === 'arq') { const v = filtro !== 'arq'; ids.forEach(id => { const r = all.find(x => x.id === id); if (r) salvar(r, { arquivado: v }); }); marc.clear(); render(); }
-    if (bb.dataset.b === 'del') { confBulk = true; renderBulk(); }
-    if (bb.dataset.b === 'del-ok') excluir(ids);
-    if (bb.dataset.b === 'no') { confBulk = false; renderBulk(); }
     if (bb.dataset.b === 'clr') { marc.clear(); render(); }
     return;
   }
-  const tr = e.target.closest('tbody tr'); if (tr) { sel = tr.dataset.id; confDet = false; $('det').dataset.id = ''; render(); if (innerWidth < 1000) $('det').scrollIntoView({ behavior: 'smooth' }); return; }
+  const tr = e.target.closest('tbody tr'); if (tr) { sel = tr.dataset.id; $('det').dataset.id = ''; render(); if (innerWidth < 1000) $('det').scrollIntoView({ behavior: 'smooth' }); return; }
   const f = e.target.closest('[data-f]'); if (f) { filtro = f.dataset.f; marc.clear(); render(); return; }
   const r = (window.__all || []).find(x => x.id === sel); if (!r) return;
   const sb = e.target.closest('[data-s]'); if (sb) { salvar(r, { status: sb.dataset.s }); return; }
   if (e.target.id === 'd-save') salvar(r, { nota: $('d-nota').value, valor: $('d-val').value });
   if (e.target.id === 'd-arq') salvar(r, { arquivado: !r.arq });
-  if (e.target.id === 'd-del') { confDet = true; $('det').dataset.id = ''; renderDet(); }
-  if (e.target.id === 'd-del-no') { confDet = false; $('det').dataset.id = ''; renderDet(); }
-  if (e.target.id === 'd-del-ok') excluir([r.id]);
 });
 $('q').addEventListener('input', e => { busca = e.target.value; render(); });
 $('b-csv').addEventListener('click', () => {
